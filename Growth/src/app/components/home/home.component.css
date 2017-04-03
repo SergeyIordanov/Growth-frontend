@@ -50,7 +50,6 @@ ul {
 
 .add-btn::before,
 .delete-btn::before {
-    background: rgba(0, 0, 0, 0) url("../images/plus.png") no-repeat scroll 0 0;
     content: "";
     ;
     height: 12px;

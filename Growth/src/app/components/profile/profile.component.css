@@ -47,7 +47,7 @@
 .event-list>li>time>.month { 
     display: block; 
     margin-top: 15px; 
-    font-size: 42pt; 
+    font-size: 38pt; 
     font-weight: 100; 
     line-height: 1; 
 } 
@@ -251,7 +251,11 @@ ul {
     list-style: none; 
     padding: 0; 
     margin: 0; 
-} 
+}
+
+.selected-path {
+    background-color: palegreen !important;
+}
 
 .login-header { 
     display: inline-block; 
@@ -291,7 +295,6 @@ ul {
 
 .add-btn::before, 
 .delete-btn::before { 
-    background: rgba(0, 0, 0, 0) url("../images/plus.png") no-repeat scroll 0 0; 
     content: ""; 
     height: 12px; 
     left: 17px; 

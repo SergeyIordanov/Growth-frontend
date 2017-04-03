@@ -1,4 +1,4 @@
-<div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+<div class="col-md-2 col-sm-1 hidden-xs v-align box" id="navigation">
     <div class="logo">
         <a [routerLink]="['/users', userId]"><img src="images/logo.png" alt="logo" class="hidden-xs hidden-sm">
             <img src="images/logo.png" alt="logo" class="visible-xs visible-sm circle-logo">
@@ -6,7 +6,7 @@
     </div>
     <div class="navi">
         <ul>
-            <li [class.active]="!selectedKidId"><a href="home.html"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+            <li [class.active]="!selectedKidId"><a [routerLink]="['/users', userId]"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
             <li [class.active]="kid.id === selectedKidId" *ngFor="let kid of kids"><a [routerLink]="['/users/' + userId + '/kids/' + kid.id]"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">{{kid.Name}}</span></a></li>
 
             <li>

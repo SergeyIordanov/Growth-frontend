@@ -17,6 +17,7 @@ var path_service_1 = require("./../../services/path/path.service");
 var goal_service_1 = require("./../../services/goal/goal.service");
 var step_service_1 = require("./../../services/step/step.service");
 var kid_1 = require("./../../models/kid");
+var path_1 = require("./../../models/path");
 var ProfileComponent = (function () {
     function ProfileComponent(pathService, goalService, stepService, kidService, route, location) {
         this.pathService = pathService;
@@ -26,6 +27,7 @@ var ProfileComponent = (function () {
         this.route = route;
         this.location = location;
         this.kid = new kid_1.Kid();
+        this.selectedPath = new path_1.Path();
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -34,25 +36,32 @@ var ProfileComponent = (function () {
             .switchMap(function (params) { return _this.kidService.get(_this.userId, +params['kidId']); })
             .subscribe(function (kid) {
             _this.kid = kid;
-            _this.getKidInfo();
+            _this.getKidWithPaths();
+            if (_this.kid.Paths.length > 0) {
+                _this.selectedPath = _this.kid.Paths[0];
+                _this.getGoalsWithSteps(_this.selectedPath.id);
+            }
         });
     };
-    ProfileComponent.prototype.getKidInfo = function () {
+    ProfileComponent.prototype.setPath = function (pathId) {
+        this.selectedPath = this.kid.Paths.find(function (p) { return p.id === pathId; });
+        this.getGoalsWithSteps(this.selectedPath.id);
+    };
+    ProfileComponent.prototype.getKidWithPaths = function () {
         var _this = this;
         this.pathService.getAll(this.userId, this.kid.id)
             .then(function (paths) {
             _this.kid.Paths = paths;
-            if (_this.kid.Paths) {
-                _this.kid.Paths.forEach(function (path) {
-                    _this.getGoals(_this.kid.id, path.id).then(function (goals) {
-                        path.Goals = goals;
-                        if (path.Goals) {
-                            path.Goals.forEach(function (goal) {
-                                _this.getSteps(_this.kid.id, path.id, goal.id).then(function (steps) {
-                                    goal.Steps = steps;
-                                });
-                            });
-                        }
+        });
+    };
+    ProfileComponent.prototype.getGoalsWithSteps = function (pathId) {
+        var _this = this;
+        this.getGoals(this.kid.id, pathId).then(function (goals) {
+            _this.selectedPath.Goals = goals;
+            if (_this.selectedPath.Goals) {
+                _this.selectedPath.Goals.forEach(function (goal) {
+                    _this.getSteps(_this.kid.id, _this.selectedPath.id, goal.id).then(function (steps) {
+                        goal.Steps = steps;
                     });
                 });
             }
