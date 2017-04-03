@@ -1,0 +1,26 @@
+<div class="container-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="wrap">
+                    <p class="form-title">Register</p>
+                    <form class="login">
+                        <input type="text" placeholder="Name" />
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Password" />
+                        <input type="password" placeholder="Confirm password" />
+                        <input type="submit" (click)="register()" value="Sign Up" class="btn btn-success btn-sm" />
+                        <div class="sign-up">
+                            <div class="row">
+                                <div class="col-md-12 sign-up-content text-center">
+                                    <a [routerLink]="['/login']">I already have an account</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="posted-by"><img src="images/logo.png" alt="logo" class="hidden-xs circle-logo"></div>
+    </div>
+</div>

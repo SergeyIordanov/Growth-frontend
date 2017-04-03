@@ -14,7 +14,7 @@ import { Path }        from './../../models/path';
     styleUrls: [ './home.component.css' ]
 })
 
-export class HomeComponent{
+export class HomeComponent implements OnInit{
     constructor(
         private pathService: PathService,
         private kidService: KidService,

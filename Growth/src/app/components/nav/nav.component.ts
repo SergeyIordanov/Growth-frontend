@@ -1,4 +1,4 @@
-import { Component, Input }                 from '@angular/core';
+import { Component, Input, OnInit }                 from '@angular/core';
 import { ActivatedRoute, Router, Params }   from '@angular/router';
 import { Location }                         from '@angular/common';
 import 'rxjs/add/operator/switchMap';
@@ -12,7 +12,7 @@ import { Kid }        from './../../models/kid';
     styleUrls: [ './nav.component.css' ]
 })
 
-export class NavComponent {
+export class NavComponent implements OnInit {
     constructor(
         private kidService: KidService,
         private route: ActivatedRoute,

@@ -18,6 +18,8 @@ var home_component_1 = require("./../components/home/home.component");
 var header_component_1 = require("./../components/header/header.component");
 var nav_component_1 = require("./../components/nav/nav.component");
 var profile_component_1 = require("./../components/profile/profile.component");
+var login_component_1 = require("./../components/login/login.component");
+var register_component_1 = require("./../components/register/register.component");
 var user_service_1 = require("./../services/user/user.service");
 var kid_service_1 = require("./../services/kid/kid.service");
 var path_service_1 = require("./../services/path/path.service");
@@ -42,7 +44,9 @@ AppModule = __decorate([
             home_component_1.HomeComponent,
             header_component_1.HeaderComponent,
             nav_component_1.NavComponent,
-            profile_component_1.ProfileComponent
+            profile_component_1.ProfileComponent,
+            login_component_1.LoginComponent,
+            register_component_1.RegisterComponent
         ],
         providers: [
             user_service_1.UserService,

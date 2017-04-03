@@ -9,8 +9,12 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var home_component_1 = require("./../components/home/home.component");
 var profile_component_1 = require("./../components/profile/profile.component");
+var login_component_1 = require("./../components/login/login.component");
+var register_component_1 = require("./../components/register/register.component");
 var routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'register', component: register_component_1.RegisterComponent },
     { path: 'users/:userId', component: home_component_1.HomeComponent },
     { path: 'users/:userId/kids/:kidId', component: profile_component_1.ProfileComponent },
 ];

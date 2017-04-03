@@ -9,13 +9,15 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './../services/in-memory-data.service';
 
 import { AppComponent }         from './../components/app/app.component';
-import { HomeComponent }         from './../components/home/home.component';
-import { HeaderComponent }         from './../components/header/header.component';
+import { HomeComponent }        from './../components/home/home.component';
+import { HeaderComponent }      from './../components/header/header.component';
 import { NavComponent }         from './../components/nav/nav.component';
-import { ProfileComponent }         from './../components/profile/profile.component';
+import { ProfileComponent }     from './../components/profile/profile.component';
+import { LoginComponent }     from './../components/login/login.component';
+import { RegisterComponent }     from './../components/register/register.component';
 
 import { UserService }  from './../services/user/user.service';
-import { KidService }  from './../services/kid/kid.service';
+import { KidService }   from './../services/kid/kid.service';
 import { PathService }  from './../services/path/path.service';
 import { GoalService }  from './../services/goal/goal.service';
 import { StepService }  from './../services/step/step.service';
@@ -33,7 +35,9 @@ import { StepService }  from './../services/step/step.service';
     HomeComponent,
     HeaderComponent,
     NavComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   providers: [ 
     UserService, 

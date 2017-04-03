@@ -15,9 +15,10 @@ require("rxjs/add/operator/switchMap");
 var user_service_1 = require("./../../services/user/user.service");
 var user_1 = require("./../../models/user");
 var HeaderComponent = (function () {
-    function HeaderComponent(userService, route, location) {
+    function HeaderComponent(userService, route, router, location) {
         this.userService = userService;
         this.route = route;
+        this.router = router;
         this.location = location;
         this.user = new user_1.User();
     }
@@ -31,6 +32,10 @@ var HeaderComponent = (function () {
                 _this.title = "Hello, " + user.Name;
             }
         });
+    };
+    HeaderComponent.prototype.logout = function () {
+        // todo logout
+        this.router.navigate(['/login']);
     };
     return HeaderComponent;
 }());
@@ -46,6 +51,7 @@ HeaderComponent = __decorate([
     }),
     __metadata("design:paramtypes", [user_service_1.UserService,
         router_1.ActivatedRoute,
+        router_1.Router,
         common_1.Location])
 ], HeaderComponent);
 exports.HeaderComponent = HeaderComponent;
