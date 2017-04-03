@@ -42,6 +42,11 @@ var ProfileComponent = (function () {
                 _this.getGoalsWithSteps(_this.selectedPath.id);
             }
         });
+        $('.input-group.date.month-only').datepicker({
+            format: "mm/yyyy",
+            startView: 1,
+            minViewMode: 1
+        });
     };
     ProfileComponent.prototype.setPath = function (pathId) {
         this.selectedPath = this.kid.Paths.find(function (p) { return p.id === pathId; });

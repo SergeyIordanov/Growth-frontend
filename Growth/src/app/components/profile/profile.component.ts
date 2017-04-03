@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import 'rxjs/add/operator/switchMap';
+import {} from "jquery";
 
 import { KidService }  from './../../services/kid/kid.service';
 import { PathService } from './../../services/path/path.service';
@@ -44,7 +45,13 @@ export class ProfileComponent{
                     this.selectedPath = this.kid.Paths[0];
                     this.getGoalsWithSteps(this.selectedPath.id);
                 }
-            });           
+            });  
+
+        $('.input-group.date.month-only').datepicker({
+            format: "mm/yyyy",
+            startView: 1,
+            minViewMode: 1
+        });         
     }
 
     setPath(pathId: number){
