@@ -10,37 +10,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
+                    <div *ngFor='let kid of kids' class="col-lg-3 col-sm-6">
                         <div class="card hovercard">
-                            <div class="cardheader-girl">
+                            <div [class.cardheader-girl]="kid.Gender === 'Female'" [class.cardheader-boy]="kid.Gender === 'Male'">
                             </div>
                             <div class="avatar">
-                                <img alt="" src="images/mary.jpg">
+                                <img alt="" src="{{kid.PhotoUrl}}">
                             </div>
                             <div class="info">
                                 <div class="title">
-                                    <a href="growth.html">Mary Brown</a>
+                                    <a [routerLink]="['/users/' + userId + '/kids/' + kid.id]">{{kid.Name}}</a>
                                 </div>
-                                <div class="desc">Spanish</div>
-                                <div class="desc">Dancing</div>
-                                <div class="desc">Mountaineering</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card hovercard">
-                            <div class="cardheader-boy">
-                            </div>
-                            <div class="avatar">
-                                <img alt="" src="images/steave.jpg">
-                            </div>
-                            <div class="info">
-                                <div class="title">
-                                    <a href="growth.html">Steave Brown</a>
-                                </div>
-                                <div class="desc">Guitar</div>
-                                <div class="desc">Skying</div>
-                                <div class="desc">Painting</div>
+                                <div *ngFor="let path of kid.Paths" class="desc">{{path.Title}}</div>
                             </div>
                         </div>
                     </div>

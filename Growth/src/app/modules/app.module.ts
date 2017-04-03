@@ -15,6 +15,7 @@ import { NavComponent }         from './../components/nav/nav.component';
 
 import { UserService }  from './../services/user/user.service';
 import { KidService }  from './../services/kid/kid.service';
+import { PathService }  from './../services/path/path.service';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { KidService }  from './../services/kid/kid.service';
   ],
   providers: [ 
     UserService, 
-    KidService 
+    KidService,
+    PathService
   ],
   bootstrap: [ AppComponent ]
 })

@@ -19,6 +19,7 @@ var header_component_1 = require("./../components/header/header.component");
 var nav_component_1 = require("./../components/nav/nav.component");
 var user_service_1 = require("./../services/user/user.service");
 var kid_service_1 = require("./../services/kid/kid.service");
+var path_service_1 = require("./../services/path/path.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -41,7 +42,8 @@ AppModule = __decorate([
         ],
         providers: [
             user_service_1.UserService,
-            kid_service_1.KidService
+            kid_service_1.KidService,
+            path_service_1.PathService
         ],
         bootstrap: [app_component_1.AppComponent]
     })

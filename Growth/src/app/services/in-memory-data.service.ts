@@ -13,6 +13,7 @@ export class InMemoryDataService implements InMemoryDbService {
                         id: 1,
                         Name: "Mary Brown",
                         Gender: "Female",
+                        PhotoUrl: "./images/mary.jpg",
                         Paths: [
                             {
                                 id: 1,
@@ -106,6 +107,7 @@ export class InMemoryDataService implements InMemoryDbService {
                         id: 2,
                         Name: "Steave Brown",
                         Gender: "Male",
+                        PhotoUrl: "./images/steave.jpg",
                         Paths: [
                             {
                                 id: 4,
