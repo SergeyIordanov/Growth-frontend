@@ -29,7 +29,10 @@ export class KidService {
         
         return this.http.get(url)
                 .toPromise()
-                .then(response => (response.json().data[0].Kids as Kid[]).find(k => k.id === id))
+                .then(response => {
+                    var data = response.json().data;
+                    return (data.Kids as Kid[]).find(k => k.id === id)}
+                    )
                 .catch(this.handleError);
     }
 

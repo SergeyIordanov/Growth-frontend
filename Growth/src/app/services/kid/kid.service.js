@@ -31,7 +31,10 @@ var KidService = (function () {
         var url = this.urlPrefix + "/" + userId;
         return this.http.get(url)
             .toPromise()
-            .then(function (response) { return response.json().data[0].Kids.find(function (k) { return k.id === id; }); })
+            .then(function (response) {
+            var data = response.json().data;
+            return data.Kids.find(function (k) { return k.id === id; });
+        })
             .catch(this.handleError);
     };
     KidService.prototype.update = function (userId, kid) {

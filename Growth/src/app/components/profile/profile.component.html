@@ -1,0 +1,282 @@
+<div class="display-table">
+    <div class="row display-table-row">
+        <c-nav></c-nav>
+        <div class="col-md-10 col-sm-11 display-table-cell v-align">
+            <c-header [title]="kid.Name"></c-header>
+            <div class="row fb-profile-row">
+                <div class="fb-profile">
+                    <img align="left" class="fb-image-lg" src="images/back-girl.jpg" alt="Profile image example" />
+                    <img align="left" class="fb-image-profile thumbnail" src="images/mary.jpg" alt="Profile image example" />
+                    <div class="fb-profile-text">
+                        <h1>Mary Brown</h1>
+                        <p class="hidden-xs">Spanish, Dancing, Mountaineering</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <p class="paths-goals text-center">Paths
+                        <a href="#" data-toggle="modal" data-target="#modal_add_path" class="btn btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></a>
+                    </p>
+                    <ul class="event-list paths">
+                        <li>
+                            <time style="background-color: palegreen;">
+                            </time>
+                            <div>
+                            </div>
+                            <div class="info">
+                                <h2 class="title"><a href="#">Spanish</a></h2>
+                                <p class="desc">Mary dreams about being a toreador. In this case Spanish will be useful</p>
+                                <ul>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_edit_path"><span class="fa fa-pencil"></span> Edit</a></li>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_path"><span class="fa fa-remove"></span> Delete</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <time>
+                            </time>
+                            <div>
+                            </div>
+                            <div class="info">
+                                <h2 class="title"><a href="#">Dancing</a></h2>
+                                <p class="desc">In order to be fast and flexible Mary should take some dancing classes</p>
+                                <ul>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_edit_path"><span class="fa fa-pencil"></span> Edit</a></li>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_path"><span class="fa fa-remove"></span> Delete</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <time>
+                            </time>
+                            <div>
+                            </div>
+                            <div class="info">
+                                <h2 class="title"><a href="#">Mountaineering</a></h2>
+                                <p class="desc">Sounds like a good skill to get to the top of everything!</p>
+                                <ul>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_edit_path"><span class="fa fa-pencil"></span> Edit</a></li>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_path"><span class="fa fa-remove"></span> Delete</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                    <p class="paths-goals text-center">Goals (Spanish)
+                        <a href="#" data-toggle="modal" data-target="#modal_add_goal" class="btn btn-circle btn-lg">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                    </p>
+                    <p class="goal-desc text-center">Mary dreams about being a toreador. In this case Spanish will be useful</p>
+                    <ul class="event-list goals">
+                        <li class="completed">
+                            <time>
+                                <span class="month">Jul</span>
+                                <span class="year">2017</span>
+                            </time>
+                            <div class="info">
+                                <h2 class="title">Achieve Basic level (Completed)</h2>
+                                <hr>
+                                <table class="table desc">
+                                    <thead>
+                                        <tr>
+                                            <th>Steps</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="success">
+                                            <td>Start attanding Spanish classes</td>
+                                            <td><span class="fa fa-check"></span></td>
+                                        </tr>
+                                        <tr class="success">
+                                            <td>Try to speak inside the family</td>
+                                            <td><span class="fa fa-check"></span></td>
+                                        </tr>
+                                        <tr class="success">
+                                            <td>Complete school's exams</td>
+                                            <td><span class="fa fa-check"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ul>
+                                    <li style="width:50%;"><span class="fa fa-mail-reply"></span> Reset</li>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_goal"><span class="fa fa-remove"></span> Delete</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <time>
+                                <span class="month">Dec</span>
+                                <span class="year">2019</span>
+                            </time>
+                            <div class="info">
+                                <h2 class="title">Achieve Intermediate level</h2>
+                                <hr>
+                                <table class="table desc">
+                                    <thead>
+                                        <tr>
+                                            <th>Steps <a href="#" data-toggle="modal" data-target="#modal_add_step" class="btn btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></a></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="success">
+                                            <td>Start attanding Spanish speaking clubs</td>
+                                            <td><a href="#"><span class="fa fa-check"></span></a></td>
+                                            <td><a href="#"><span class="fa fa-remove"></span></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Find some Spanish friends</td>
+                                            <td><a href="#"><span class="fa fa-minus"></span></a></td>
+                                            <td><a href="#"><span class="fa fa-remove"></span></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Complete university's exams</td>
+                                            <td><a href="#"><span class="fa fa-minus"></span></a></td>
+                                            <td><a href="#"><span class="fa fa-remove"></span></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Complete at least 10 Spanish books</td>
+                                            <td><a href="#"><span class="fa fa-minus"></span></a></td>
+                                            <td><a href="#"><span class="fa fa-remove"></span></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ul>
+                                    <li style="width:50%;"><span class="fa fa-check"></span> Complete</li>
+                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_goal"><span class="fa fa-remove"></span> Delete</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div id="modal_add_path" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Add Path</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Title" name="title">
+                <textarea placeholder="Description" name="description"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_edit_path" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Edit Path</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Title" name="title" value="Spanish">
+                <textarea placeholder="Description" name="description">Mary dreams about being a toreador. In this case Spanish will be useful</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_add_goal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Add Goal</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Title" name="title">
+                <div class="input-group date month-only">
+                    <input type="text" placeholder="End date" name="endDate">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_delete_path" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Are you sure you want to delete this path?</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="delete-btn" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_delete_goal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Are you sure you want to delete this goal?</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="delete-btn" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_add_step" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Add Step</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="To do" name="text">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

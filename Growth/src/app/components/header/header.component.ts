@@ -1,4 +1,4 @@
-import { Component, OnInit }        from '@angular/core';
+import { Component, OnInit, Input }        from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import 'rxjs/add/operator/switchMap';
@@ -19,11 +19,18 @@ export class HeaderComponent implements OnInit{
         private location: Location
     ) {}
 
+    @Input() title: string;
     user = new User();
 
     ngOnInit(): void {
         this.route.params
             .switchMap((params: Params) => this.userService.get(+params['userId']))
-            .subscribe(user => this.user = user);
+            .subscribe(user => {
+                this.user = user;
+                if(!this.title)
+                {
+                    this.title = "Hello, " + user.Name;
+                }
+            });
     }
 }

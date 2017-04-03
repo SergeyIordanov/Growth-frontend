@@ -25,10 +25,19 @@ var HeaderComponent = (function () {
         var _this = this;
         this.route.params
             .switchMap(function (params) { return _this.userService.get(+params['userId']); })
-            .subscribe(function (user) { return _this.user = user; });
+            .subscribe(function (user) {
+            _this.user = user;
+            if (!_this.title) {
+                _this.title = "Hello, " + user.Name;
+            }
+        });
     };
     return HeaderComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], HeaderComponent.prototype, "title", void 0);
 HeaderComponent = __decorate([
     core_1.Component({
         selector: 'c-header',

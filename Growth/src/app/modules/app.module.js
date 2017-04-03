@@ -17,9 +17,12 @@ var app_component_1 = require("./../components/app/app.component");
 var home_component_1 = require("./../components/home/home.component");
 var header_component_1 = require("./../components/header/header.component");
 var nav_component_1 = require("./../components/nav/nav.component");
+var profile_component_1 = require("./../components/profile/profile.component");
 var user_service_1 = require("./../services/user/user.service");
 var kid_service_1 = require("./../services/kid/kid.service");
 var path_service_1 = require("./../services/path/path.service");
+var goal_service_1 = require("./../services/goal/goal.service");
+var step_service_1 = require("./../services/step/step.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -38,12 +41,15 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             home_component_1.HomeComponent,
             header_component_1.HeaderComponent,
-            nav_component_1.NavComponent
+            nav_component_1.NavComponent,
+            profile_component_1.ProfileComponent
         ],
         providers: [
             user_service_1.UserService,
             kid_service_1.KidService,
-            path_service_1.PathService
+            path_service_1.PathService,
+            goal_service_1.GoalService,
+            step_service_1.StepService
         ],
         bootstrap: [app_component_1.AppComponent]
     })

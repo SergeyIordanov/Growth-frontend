@@ -34,10 +34,12 @@ export class HomeComponent{
         this.kidService.getAll(this.userId)
             .then(kids => {
                 this.kids = kids;
-                this.kids.forEach(kid => {
-                    this.pathService.getAll(this.userId, kid.id)
-                        .then(paths => kid.Paths = paths)
-                });
+                if(this.kids){
+                    this.kids.forEach(kid => {
+                        this.pathService.getAll(this.userId, kid.id)
+                            .then(paths => kid.Paths = paths)
+                    });
+                }      
             });
     }
 }

@@ -11,32 +11,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var PathService = (function () {
-    function PathService(http) {
+var StepService = (function () {
+    function StepService(http) {
         this.http = http;
         this.urlPrefix = 'api/users';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    PathService.prototype.getAll = function (userId, kidId) {
+    StepService.prototype.getAll = function (userId, kidId, pathId, goalId) {
         var url = this.urlPrefix + "/" + userId;
         return this.http.get(this.urlPrefix)
             .toPromise()
             .then(function (response) {
             var data = response.json().data;
             var kids = data[0].Kids;
-            return kids.find(function (k) { return k.id === kidId; }).Paths;
+            var paths = data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths;
+            var goals = data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths[paths.findIndex(function (p) { return p.id == pathId; })].Goals;
+            return data[0]
+                .Kids[kids.findIndex(function (k) { return k.id == kidId; })]
+                .Paths[paths.findIndex(function (p) { return p.id == pathId; })]
+                .Goals[goals.findIndex(function (g) { return g.id == goalId; })]
+                .Steps;
         })
             .catch(this.handleError);
     };
-    PathService.prototype.handleError = function (error) {
+    StepService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // TODO for demo purposes only
         return Promise.reject(error.message || error);
     };
-    return PathService;
+    return StepService;
 }());
-PathService = __decorate([
+StepService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], PathService);
-exports.PathService = PathService;
-//# sourceMappingURL=path.service.js.map
+], StepService);
+exports.StepService = StepService;
+//# sourceMappingURL=step.service.js.map

@@ -11,32 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var PathService = (function () {
-    function PathService(http) {
+var GoalService = (function () {
+    function GoalService(http) {
         this.http = http;
         this.urlPrefix = 'api/users';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    PathService.prototype.getAll = function (userId, kidId) {
+    GoalService.prototype.getAll = function (userId, kidId, pathId) {
         var url = this.urlPrefix + "/" + userId;
         return this.http.get(this.urlPrefix)
             .toPromise()
             .then(function (response) {
             var data = response.json().data;
             var kids = data[0].Kids;
-            return kids.find(function (k) { return k.id === kidId; }).Paths;
+            var paths = data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths;
+            return data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths[paths.findIndex(function (p) { return p.id == pathId; })].Goals;
         })
             .catch(this.handleError);
     };
-    PathService.prototype.handleError = function (error) {
+    GoalService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // TODO for demo purposes only
         return Promise.reject(error.message || error);
     };
-    return PathService;
+    return GoalService;
 }());
-PathService = __decorate([
+GoalService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], PathService);
-exports.PathService = PathService;
-//# sourceMappingURL=path.service.js.map
+], GoalService);
+exports.GoalService = GoalService;
+//# sourceMappingURL=goal.service.js.map

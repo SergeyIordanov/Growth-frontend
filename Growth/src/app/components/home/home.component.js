@@ -30,10 +30,12 @@ var HomeComponent = (function () {
         this.kidService.getAll(this.userId)
             .then(function (kids) {
             _this.kids = kids;
-            _this.kids.forEach(function (kid) {
-                _this.pathService.getAll(_this.userId, kid.id)
-                    .then(function (paths) { return kid.Paths = paths; });
-            });
+            if (_this.kids) {
+                _this.kids.forEach(function (kid) {
+                    _this.pathService.getAll(_this.userId, kid.id)
+                        .then(function (paths) { return kid.Paths = paths; });
+                });
+            }
         });
     };
     return HomeComponent;
