@@ -1,0 +1,80 @@
+<div class="display-table">
+    <div class="row display-table-row">
+        <c-nav></c-nav>
+        <div class="col-md-10 col-sm-11 display-table-cell v-align">
+            <c-header></c-header>
+            <div class="user-dashboard">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><a href="#" class="add-btn" data-toggle="modal" data-target="#add_modal">Add Child</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card hovercard">
+                            <div class="cardheader-girl">
+                            </div>
+                            <div class="avatar">
+                                <img alt="" src="images/mary.jpg">
+                            </div>
+                            <div class="info">
+                                <div class="title">
+                                    <a href="growth.html">Mary Brown</a>
+                                </div>
+                                <div class="desc">Spanish</div>
+                                <div class="desc">Dancing</div>
+                                <div class="desc">Mountaineering</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card hovercard">
+                            <div class="cardheader-boy">
+                            </div>
+                            <div class="avatar">
+                                <img alt="" src="images/steave.jpg">
+                            </div>
+                            <div class="info">
+                                <div class="title">
+                                    <a href="growth.html">Steave Brown</a>
+                                </div>
+                                <div class="desc">Guitar</div>
+                                <div class="desc">Skying</div>
+                                <div class="desc">Painting</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="add_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Add Child</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Name" name="name">
+                <div class="radio">
+                    <label><input type="radio" value="male" name="gender">Boy</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" value="female" name="gender">Girl</label>
+                </div>
+                <input type="file" accept=".jpg,.png,.jpeg" placeholder="Photo" name="photo">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>

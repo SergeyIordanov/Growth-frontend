@@ -1,0 +1,121 @@
+a:focus,
+a:hover,
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+li,
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 13px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+  color: #5584ff;
+}
+
+.login-header {
+    display: inline-block;
+    width: 100%;
+    background: #0e1a35;
+}
+
+.navi i {
+    font-size: 20px;
+}
+
+.navi hr{
+    border-color: lightslategray;
+}
+
+.navi a {
+    border-bottom: 1px solid #0d172e;
+    border-top: 1px solid #0d172e;
+    color: #ffffff;
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 28px 20px;
+    text-decoration: none;
+}
+
+.navi i {
+    margin-right: 15px;
+    color: #5584ff;
+}
+
+.navi .active a {
+    background: #122143;
+    border-left: 5px solid #5584ff;
+    padding-left: 15px;
+}
+
+.navi a:hover {
+    background: #122143 none repeat scroll 0 0;
+    border-left: 5px solid #5584ff;
+    display: block;
+    padding-left: 15px;
+}
+
+.logo {
+    text-align: center;
+}
+
+.logo img {
+    max-width: 180px;
+    padding: 16px 0 17px;
+    width: 100%;
+}
+
+.circle-logo {
+    margin: 0 auto;
+    max-width: 30px !important;
+    text-align: center;
+}
+
+#navigation {
+    background: #0e1a35;
+    height: 100vh;
+    padding: 0;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+@media only screen and (max-device-width: 767px) {   
+    #navigation .navi a {
+        font-size: 14px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    #navigation .navi i {
+        margin-right: 0px;
+    }
+
+    #navigation .navi a:hover,
+    #navigation .navi .active a {
+        background: #122143 none repeat scroll 0 0;
+        border-left: none;
+        display: block;
+        padding-left: 20px;
+    }
+}
+
+@media only screen and (min-device-width:998px) and (max-device-width: 1350px) {
+    #navigation .logo img {
+        max-width: 130px;
+        padding: 16px 0 17px;
+        width: 100%;
+    }
+}

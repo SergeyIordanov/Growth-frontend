@@ -1,0 +1,46 @@
+<div class="row">
+    <header>
+        <div class="col-md-7">
+            <nav class="navbar-default pull-left">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false" onclick="$('#navigation').toggleClass('hidden-xs');">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </nav>
+            <div class=" hidden-xs hidden-sm">
+                <p class="header-content">Hello, {{user.Name}}</p>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="header-rightside">
+                <ul class="list-inline header-top pull-right">
+                    <li>
+                        <a class="icon-info">
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <span class="label label-primary">1</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="images/user.png" alt="user"></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="navbar-content">
+                                    <span>{{user.Name}}</span>
+                                    <p class="text-muted small">
+                                        {{user.Email}}
+                                    </p>
+                                    <div class="divider"></div>
+                                    <a [routerLink]="['/login']" class="view btn-sm active">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+</div>

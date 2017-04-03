@@ -1,0 +1,138 @@
+a:focus,
+a:hover,
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+header {
+    background: #ffffff none repeat scroll 0 0;
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
+    display: inline-block !important;
+    line-height: 23px;
+    padding: 15px;
+    margin-bottom: 15px; 
+    transition: all 0.5s ease 0s;
+    width: 100%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+header .header-content{
+    font-size: 2em;
+    margin: 10px 5px;
+    color: #8492af;
+}
+
+.header-top {
+    margin: 0;
+    padding-top: 2px;
+}
+
+.header-top img {
+    border-radius: 50%;
+    max-width: 48px !important;
+    width: 100%;
+}
+
+.header-top li {
+    display: inline-block;
+    text-align: center;
+}
+
+.header-top .dropdown-toggle {
+    color: #0e1a35;
+}
+
+.header-top .dropdown-menu {
+    border: medium none;
+    left: -85px;
+    padding: 17px;
+}
+
+.header-rightside .nav>li>a:focus,
+.header-rightside .nav>li>a:hover {
+    background: none;
+    text-decoration: none;
+}
+
+.header-top i {
+    color: #0e1a35;
+    font-size: 18px;
+}
+
+.navbar-default {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+.navbar-toggle {
+    border: none;
+}
+
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #0e1a35;
+}
+
+.icon-info {
+    position: relative;
+}
+
+.icon-info .label {
+    border: 2px solid #ffffff;
+    font-weight: 500;
+    padding: 3px 5px;
+    text-align: center;
+}
+
+.label.label-primary {
+    border-radius: 50%;
+    font-size: 9px;
+    left: 8px;
+    position: absolute;
+    top: -9px;
+}
+
+@media only screen and (max-device-width: 767px) {   
+    header .header-top img {
+        max-width: 38px !important;
+    }
+
+    .v-align header {
+        padding: 12px 15px;
+    }
+
+    header .header-top li {
+        padding-left: 13px;
+        padding-right: 6px;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: rgba(0, 0, 0, 0);
+    }
+
+    .navbar-header .navbar-toggle {
+        float: left;
+        margin: 0;
+        padding: 0;
+        top: 12px;
+    }
+}
+
+@media only screen and (max-device-width: 992px) {
+    header .header-top li {
+        padding-left: 20px !important;
+        padding-right: 0;
+    }
+
+    header .logo img {
+        max-width: 125px !important;
+    }
+}
