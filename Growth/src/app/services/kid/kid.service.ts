@@ -2,6 +2,7 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import { User } from './../../models/user';
 import { Kid } from './../../models/kid';
 
 @Injectable()
@@ -47,13 +48,22 @@ export class KidService {
     }
 
     create(userId: number, kid: Kid): Promise<Kid> {
-        const url = `${this.urlPrefix}/${userId}/kids`;
+        const url = `${this.urlPrefix}/${userId}`;
+        var newUser = new User();
 
-        return this.http
-            .post(this.urlPrefix, JSON.stringify(kid), {headers: this.headers})
+        return this.http.get(url)
             .toPromise()
-            .then(res => res.json().data as Kid)
-            .catch(this.handleError);
+            .then(response => response.json().data as User)
+            .catch(this.handleError)
+            .then(user => {
+                newUser = user;
+                newUser.Kids.push(kid);
+                this.http
+                    .put(this.urlPrefix, JSON.stringify(newUser), {headers: this.headers})
+                    .toPromise()
+                    .then(res => (res.json().data as User).Kids.find(k => k.Name === kid.Name) as Kid)
+                    .catch(this.handleError);
+            });
     }
 
     delete(id: number): Promise<void> {

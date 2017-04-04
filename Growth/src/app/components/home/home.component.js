@@ -14,15 +14,26 @@ var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var kid_service_1 = require("./../../services/kid/kid.service");
 var path_service_1 = require("./../../services/path/path.service");
+var kid_1 = require("./../../models/kid");
 var HomeComponent = (function () {
     function HomeComponent(pathService, kidService, route, location) {
         this.pathService = pathService;
         this.kidService = kidService;
         this.route = route;
         this.location = location;
+        this.newKid = new kid_1.Kid();
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.userId = +this.route.snapshot.params['userId'];
+        this.getKidsWithPaths();
+    };
+    HomeComponent.prototype.addKid = function () {
+        var _this = this;
+        if (this.newKid.Gender.trim() !== ""
+            && this.newKid.Name.trim() !== "") {
+            this.kidService.create(this.userId, this.newKid)
+                .then(function (kid) { return _this.kids.push(kid); });
+        }
         this.getKidsWithPaths();
     };
     HomeComponent.prototype.getKidsWithPaths = function () {

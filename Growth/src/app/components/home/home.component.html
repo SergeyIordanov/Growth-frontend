@@ -42,18 +42,18 @@
                 <h4 class="modal-title">Add Child</h4>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="Name" name="name">
+                <input [(ngModel)]="newKid.Name" type="text" placeholder="Name" name="name">
                 <div class="radio">
-                    <label><input type="radio" checked value="male" name="gender">Boy</label>
+                    <label><input [(ngModel)]="newKid.Gender" type="radio" checked value="Male" name="gender">Boy</label>
                 </div>
                 <div class="radio">
-                    <label><input type="radio" value="female" name="gender">Girl</label>
+                    <label><input [(ngModel)]="newKid.Gender" type="radio" value="Female" name="gender">Girl</label>
                 </div>
                 <input type="file" accept=".jpg,.png,.jpeg" placeholder="Photo" name="photo">
             </div>
             <div class="modal-footer">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+                <button (click)="addKid()" type="button" class="add-btn" data-dismiss="modal">Save</button>
             </div>
         </div>
 

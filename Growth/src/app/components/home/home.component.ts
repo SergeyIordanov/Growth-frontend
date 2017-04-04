@@ -24,13 +24,24 @@ export class HomeComponent implements OnInit{
 
     userId: number;
     kids: Kid[];
+    newKid = new Kid();
 
     ngOnInit(): void {
         this.userId = +this.route.snapshot.params['userId'];
         this.getKidsWithPaths();    
     }
 
-    getKidsWithPaths(): void {
+    addKid(){
+        if(this.newKid.Gender.trim() !== ""
+            && this.newKid.Name.trim() !== ""){
+            this.kidService.create(this.userId, this.newKid)
+                .then(kid => this.kids.push(kid));
+        }
+
+        this.getKidsWithPaths();  
+    }
+
+    private getKidsWithPaths(): void {
         this.kidService.getAll(this.userId)
             .then(kids => {
                 this.kids = kids;

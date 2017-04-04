@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
+var user_1 = require("./../../models/user");
 var KidService = (function () {
     function KidService(http) {
         this.http = http;
@@ -46,12 +47,22 @@ var KidService = (function () {
             .catch(this.handleError);
     };
     KidService.prototype.create = function (userId, kid) {
-        var url = this.urlPrefix + "/" + userId + "/kids";
-        return this.http
-            .post(this.urlPrefix, JSON.stringify(kid), { headers: this.headers })
+        var _this = this;
+        var url = this.urlPrefix + "/" + userId;
+        var newUser = new user_1.User();
+        return this.http.get(url)
             .toPromise()
-            .then(function (res) { return res.json().data; })
-            .catch(this.handleError);
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError)
+            .then(function (user) {
+            newUser = user;
+            newUser.Kids.push(kid);
+            _this.http
+                .put(_this.urlPrefix, JSON.stringify(newUser), { headers: _this.headers })
+                .toPromise()
+                .then(function (res) { return res.json().data.Kids.find(function (k) { return k.Name === kid.Name; }); })
+                .catch(_this.handleError);
+        });
     };
     KidService.prototype.delete = function (id) {
         var url = this.urlPrefix + "/" + id;
