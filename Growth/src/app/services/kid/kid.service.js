@@ -57,10 +57,10 @@ var KidService = (function () {
             .then(function (user) {
             newUser = user;
             newUser.Kids.push(kid);
-            _this.http
+            return _this.http
                 .put(_this.urlPrefix, JSON.stringify(newUser), { headers: _this.headers })
                 .toPromise()
-                .then(function (res) { return res.json().data.Kids.find(function (k) { return k.Name === kid.Name; }); })
+                .then(function (res) { return (res.json().data.Kids.find(function (k) { return k.Name === kid.Name; })); })
                 .catch(_this.handleError);
         });
     };

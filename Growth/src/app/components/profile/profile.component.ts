@@ -47,7 +47,7 @@ export class ProfileComponent{
                 }
             });  
 
-        $('.input-group.date.month-only').datepicker({
+        (<any>$('.input-group.date.month-only')).datepicker({
             format: "mm/yyyy",
             startView: 1,
             minViewMode: 1

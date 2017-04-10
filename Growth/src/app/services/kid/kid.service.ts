@@ -58,10 +58,10 @@ export class KidService {
             .then(user => {
                 newUser = user;
                 newUser.Kids.push(kid);
-                this.http
+                return this.http
                     .put(this.urlPrefix, JSON.stringify(newUser), {headers: this.headers})
                     .toPromise()
-                    .then(res => (res.json().data as User).Kids.find(k => k.Name === kid.Name) as Kid)
+                    .then(res => ((res.json().data as User).Kids.find(k => k.Name === kid.Name)) as Kid)
                     .catch(this.handleError);
             });
     }
