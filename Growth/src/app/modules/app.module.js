@@ -11,8 +11,8 @@ var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var app_routing_module_1 = require("./app-routing.module");
 // Imports for loading & configuring the in-memory web api
-var angular_in_memory_web_api_1 = require("angular-in-memory-web-api");
-var in_memory_data_service_1 = require("./../services/in-memory-data.service");
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryDataService }  from './../services/in-memory-data.service';
 var app_component_1 = require("./../components/app/app.component");
 var home_component_1 = require("./../components/home/home.component");
 var header_component_1 = require("./../components/header/header.component");
@@ -20,6 +20,8 @@ var nav_component_1 = require("./../components/nav/nav.component");
 var profile_component_1 = require("./../components/profile/profile.component");
 var login_component_1 = require("./../components/login/login.component");
 var register_component_1 = require("./../components/register/register.component");
+var cookies_service_1 = require("angular2-cookie/services/cookies.service");
+var account_service_1 = require("./../services/account/account.service");
 var user_service_1 = require("./../services/user/user.service");
 var kid_service_1 = require("./../services/kid/kid.service");
 var path_service_1 = require("./../services/path/path.service");
@@ -36,7 +38,7 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
             http_1.HttpModule,
-            angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(in_memory_data_service_1.InMemoryDataService),
+            // InMemoryWebApiModule.forRoot(InMemoryDataService),
             app_routing_module_1.AppRoutingModule
         ],
         declarations: [
@@ -49,6 +51,8 @@ AppModule = __decorate([
             register_component_1.RegisterComponent
         ],
         providers: [
+            cookies_service_1.CookieService,
+            account_service_1.AccountService,
             user_service_1.UserService,
             kid_service_1.KidService,
             path_service_1.PathService,

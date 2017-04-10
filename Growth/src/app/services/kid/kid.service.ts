@@ -2,72 +2,66 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import { AccountService } from './../account/account.service';
 import { User } from './../../models/user';
 import { Kid } from './../../models/kid';
 
 @Injectable()
 export class KidService {
 
-    private urlPrefix = 'api/users';
-    private headers = new Headers({'Content-Type': 'application/json'});
+    private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+    private headers = new Headers({
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer ' + this.accountService.token()
+    });
+    
 
-    constructor(private http: Http) { }
+    constructor(
+        private http: Http,
+        private accountService: AccountService
+    ) { }
 
-    getAll(userId: number): Promise<Kid[]> {
-        const url = `${this.urlPrefix}/${userId}`;
+    getAll(): Promise<Kid[]> {
+        const url = `${this.urlPrefix}`;
 
-        return this.http.get(this.urlPrefix)
+        return this.http.get(url, {headers: this.headers})
                 .toPromise()
-                .then(response => { 
-                    var data = response.json().data;
-                    return data[0].Kids as Kid[]
-                })
+                .then(response => response.json() as Kid[])
                 .catch(this.handleError);
     }
 
-    get(userId: number, id: number): Promise<Kid> {
-        const url = `${this.urlPrefix}/${userId}`;
+    get(id: string): Promise<Kid> {
+        const url = `${this.urlPrefix}/${id}`;
         
-        return this.http.get(url)
+        return this.http.get(url, {headers: this.headers})
                 .toPromise()
-                .then(response => {
-                    var data = response.json().data;
-                    return (data.Kids as Kid[]).find(k => k.id === id)}
-                    )
+                .then(response => response.json() as Kid)
                 .catch(this.handleError);
     }
 
-    update(userId: number, kid: Kid): Promise<Kid> {
-        const url = `${this.urlPrefix}/${userId}/kids/${kid.id}`;
+    update(kid: Kid): Promise<string> {
+        const url = `${this.urlPrefix}/${kid.Id}`;
 
         return this.http
             .put(url, JSON.stringify(kid), {headers: this.headers})
             .toPromise()
-            .then(() => kid)
+            .then(response => response.json())
             .catch(this.handleError);
     }
 
-    create(userId: number, kid: Kid): Promise<Kid> {
-        const url = `${this.urlPrefix}/${userId}`;
-        var newUser = new User();
+    create(kid: Kid): Promise<string> {
+        const url = `${this.urlPrefix}`;
 
-        return this.http.get(url)
+        return this.http
+            .post(url, JSON.stringify(kid), {headers: this.headers})
             .toPromise()
-            .then(response => response.json().data as User)
-            .catch(this.handleError)
-            .then(user => {
-                newUser = user;
-                newUser.Kids.push(kid);
-                return this.http
-                    .put(this.urlPrefix, JSON.stringify(newUser), {headers: this.headers})
-                    .toPromise()
-                    .then(res => ((res.json().data as User).Kids.find(k => k.Name === kid.Name)) as Kid)
-                    .catch(this.handleError);
-            });
+            .then(response => response.json())
+            .catch(this.handleError);
     }
 
-    delete(id: number): Promise<void> {
+    delete(id: string): Promise<void> {
         const url = `${this.urlPrefix}/${id}`;
+        
         return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
@@ -75,8 +69,17 @@ export class KidService {
     }
 
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // TODO for demo purposes only
-        
-        return Promise.reject(error.message || error);
+        console.error('An error occurred', error);
+
+        var errorObj : any;
+
+        try{
+            errorObj = JSON.parse(error._body);
+        }
+        catch(ex){
+            errorObj = { 'value': error._body }
+        };
+
+        return Promise.reject(errorObj || error);
     }
 }

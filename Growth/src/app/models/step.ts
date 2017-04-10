@@ -1,5 +1,5 @@
 export class Step {
-    id: number;
-    Text: string;
-    Completed: boolean;
+    id: string;
+    text: string;
+    completed: boolean;
 }

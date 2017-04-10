@@ -31,3 +31,7 @@ body {
 .v-align {
     vertical-align: top;
 }
+
+.error-message{
+    color: red;
+}

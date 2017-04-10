@@ -12,11 +12,13 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
+var user_service_1 = require("./../../services/user/user.service");
 var kid_service_1 = require("./../../services/kid/kid.service");
 var path_service_1 = require("./../../services/path/path.service");
 var kid_1 = require("./../../models/kid");
 var HomeComponent = (function () {
-    function HomeComponent(pathService, kidService, route, location) {
+    function HomeComponent(userService, pathService, kidService, route, location) {
+        this.userService = userService;
         this.pathService = pathService;
         this.kidService = kidService;
         this.route = route;
@@ -24,27 +26,25 @@ var HomeComponent = (function () {
         this.newKid = new kid_1.Kid();
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.userId = +this.route.snapshot.params['userId'];
         this.getKidsWithPaths();
     };
     HomeComponent.prototype.addKid = function () {
-        var _this = this;
-        if (this.newKid.Gender.trim() !== ""
-            && this.newKid.Name.trim() !== "") {
-            this.kidService.create(this.userId, this.newKid)
-                .then(function (kid) { return _this.kids.push(kid); });
+        if (this.newKid.gender.trim() !== ""
+            && this.newKid.name.trim() !== "") {
+            this.kidService.create(this.newKid)
+                .then();
         }
         this.getKidsWithPaths();
     };
     HomeComponent.prototype.getKidsWithPaths = function () {
         var _this = this;
-        this.kidService.getAll(this.userId)
+        this.kidService.getAll()
             .then(function (kids) {
             _this.kids = kids;
             if (_this.kids) {
                 _this.kids.forEach(function (kid) {
-                    _this.pathService.getAll(_this.userId, kid.id)
-                        .then(function (paths) { return kid.Paths = paths; });
+                    _this.pathService.getAll(kid.id)
+                        .then(function (paths) { return kid.paths = paths; });
                 });
             }
         });
@@ -57,7 +57,8 @@ HomeComponent = __decorate([
         templateUrl: './home.component.html',
         styleUrls: ['./home.component.css']
     }),
-    __metadata("design:paramtypes", [path_service_1.PathService,
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        path_service_1.PathService,
         kid_service_1.KidService,
         router_1.ActivatedRoute,
         common_1.Location])

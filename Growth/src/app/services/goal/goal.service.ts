@@ -29,8 +29,17 @@ export class GoalService {
     }
 
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // TODO for demo purposes only
-        
-        return Promise.reject(error.message || error);
+        console.error('An error occurred', error);
+
+        var errorObj : any;
+
+        try{
+            errorObj = JSON.parse(error._body);
+        }
+        catch(ex){
+            errorObj = { 'value': error._body }
+        };
+
+        return Promise.reject(errorObj || error);
     }
 }

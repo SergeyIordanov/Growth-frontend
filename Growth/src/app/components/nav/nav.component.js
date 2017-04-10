@@ -21,12 +21,11 @@ var NavComponent = (function () {
         this.location = location;
     }
     NavComponent.prototype.ngOnInit = function () {
-        this.userId = +this.route.snapshot.params['userId'];
         this.getKids();
     };
     NavComponent.prototype.getKids = function () {
         var _this = this;
-        this.kidService.getAll(this.userId).then(function (kids) { return _this.kids = kids; });
+        this.kidService.getAll().then(function (kids) { return _this.kids = kids; });
     };
     return NavComponent;
 }());

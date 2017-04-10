@@ -1,8 +1,9 @@
 import { Component, OnInit, Input }        from '@angular/core';
-import { ActivatedRoute, Router, Params }   from '@angular/router';
+import { Router, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
+import { AccountService } from './../../services/account/account.service';
 import { UserService } from './../../services/user/user.service';
 import { User }        from './../../models/user';
 
@@ -14,8 +15,8 @@ import { User }        from './../../models/user';
 
 export class HeaderComponent implements OnInit{
     constructor(
+        private accountService: AccountService,
         private userService: UserService,
-        private route: ActivatedRoute,
         private router: Router,
         private location: Location
     ) {}
@@ -24,19 +25,19 @@ export class HeaderComponent implements OnInit{
     user = new User();
 
     ngOnInit(): void {
-        this.route.params
-            .switchMap((params: Params) => this.userService.get(+params['userId']))
-            .subscribe(user => {
+
+        this.userService.getCurrentUser()
+            .then(user => {
                 this.user = user;
                 if(!this.title)
                 {
-                    this.title = "Hello, " + user.Name;
+                    this.title = "Hello, " + user.name;
                 }
             });
     }
 
     logout(){
-        // todo logout
+        this.accountService.logout();
         this.router.navigate(['/login']);
     }
 }

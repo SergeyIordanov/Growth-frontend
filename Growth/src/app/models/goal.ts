@@ -1,10 +1,10 @@
 import { Step } from './step';
 
 export class Goal {
-    id: number;
-    Title: string;
-    Completed: boolean;
-    GoalYear: number;
-    GoalMonth: string;
-    Steps: Step[];
+    id: string;
+    title: string;
+    completed: boolean;
+    goalYear: number;
+    goalMonth: string;
+    steps: Step[];
 }

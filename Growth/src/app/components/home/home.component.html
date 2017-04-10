@@ -12,16 +12,16 @@
                 <div class="row">
                     <div *ngFor='let kid of kids' class="col-lg-3 col-sm-6">
                         <div class="card hovercard">
-                            <div [class.cardheader-girl]="kid.Gender === 'Female'" [class.cardheader-boy]="kid.Gender === 'Male'">
+                            <div [class.cardheader-girl]="kid.gender === 'Female'" [class.cardheader-boy]="kid.gender === 'Male'">
                             </div>
                             <div class="avatar">
-                                <img alt="" src="{{kid.PhotoUrl}}">
+                                <img alt="" src="{{kid.photoUrl}}">
                             </div>
                             <div class="info">
                                 <div class="title">
-                                    <a [routerLink]="['/users/' + userId + '/kids/' + kid.id]">{{kid.Name}}</a>
+                                    <a [routerLink]="['/me/kids/' + kid.id]">{{kid.name}}</a>
                                 </div>
-                                <div *ngFor="let path of kid.Paths" class="desc">{{path.Title}}</div>
+                                <div *ngFor="let path of kid.paths" class="desc">{{path.title}}</div>
                             </div>
                         </div>
                     </div>
@@ -42,12 +42,12 @@
                 <h4 class="modal-title">Add Child</h4>
             </div>
             <div class="modal-body">
-                <input [(ngModel)]="newKid.Name" type="text" placeholder="Name" name="name">
+                <input [(ngModel)]="newKid.name" type="text" placeholder="Name" name="name">
                 <div class="radio">
-                    <label><input [(ngModel)]="newKid.Gender" type="radio" checked value="Male" name="gender">Boy</label>
+                    <label><input [(ngModel)]="newKid.gender" type="radio" checked value="Male" name="gender">Boy</label>
                 </div>
                 <div class="radio">
-                    <label><input [(ngModel)]="newKid.Gender" type="radio" value="Female" name="gender">Girl</label>
+                    <label><input [(ngModel)]="newKid.gender" type="radio" value="Female" name="gender">Girl</label>
                 </div>
                 <input type="file" accept=".jpg,.png,.jpeg" placeholder="Photo" name="photo">
             </div>

@@ -25,12 +25,10 @@ export class NavComponent implements OnInit {
     kids: Kid[];
 
     ngOnInit(): void {
-        this.userId = +this.route.snapshot.params['userId'];
-        this.getKids();
-        
+        this.getKids();       
     }
 
     getKids(): void {
-        this.kidService.getAll(this.userId).then(kids => this.kids = kids);
+        this.kidService.getAll().then(kids => this.kids = kids);
     }
 }

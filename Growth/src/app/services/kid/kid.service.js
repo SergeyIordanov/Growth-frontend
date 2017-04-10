@@ -11,58 +11,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var user_1 = require("./../../models/user");
+var account_service_1 = require("./../account/account.service");
 var KidService = (function () {
-    function KidService(http) {
+    function KidService(http, accountService) {
         this.http = http;
-        this.urlPrefix = 'api/users';
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.accountService = accountService;
+        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.headers = new http_1.Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.accountService.token()
+        });
     }
-    KidService.prototype.getAll = function (userId) {
-        var url = this.urlPrefix + "/" + userId;
-        return this.http.get(this.urlPrefix)
+    KidService.prototype.getAll = function () {
+        var url = "" + this.urlPrefix;
+        return this.http.get(url, { headers: this.headers })
             .toPromise()
-            .then(function (response) {
-            var data = response.json().data;
-            return data[0].Kids;
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    KidService.prototype.get = function (userId, id) {
-        var url = this.urlPrefix + "/" + userId;
-        return this.http.get(url)
+    KidService.prototype.get = function (id) {
+        var url = this.urlPrefix + "/" + id;
+        return this.http.get(url, { headers: this.headers })
             .toPromise()
-            .then(function (response) {
-            var data = response.json().data;
-            return data.Kids.find(function (k) { return k.id === id; });
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    KidService.prototype.update = function (userId, kid) {
-        var url = this.urlPrefix + "/" + userId + "/kids/" + kid.id;
+    KidService.prototype.update = function (kid) {
+        var url = this.urlPrefix + "/" + kid.Id;
         return this.http
             .put(url, JSON.stringify(kid), { headers: this.headers })
             .toPromise()
-            .then(function () { return kid; })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    KidService.prototype.create = function (userId, kid) {
-        var _this = this;
-        var url = this.urlPrefix + "/" + userId;
-        var newUser = new user_1.User();
-        return this.http.get(url)
+    KidService.prototype.create = function (kid) {
+        var url = "" + this.urlPrefix;
+        return this.http
+            .post(url, JSON.stringify(kid), { headers: this.headers })
             .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError)
-            .then(function (user) {
-            newUser = user;
-            newUser.Kids.push(kid);
-            return _this.http
-                .put(_this.urlPrefix, JSON.stringify(newUser), { headers: _this.headers })
-                .toPromise()
-                .then(function (res) { return (res.json().data.Kids.find(function (k) { return k.Name === kid.Name; })); })
-                .catch(_this.handleError);
-        });
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     KidService.prototype.delete = function (id) {
         var url = this.urlPrefix + "/" + id;
@@ -72,14 +60,23 @@ var KidService = (function () {
             .catch(this.handleError);
     };
     KidService.prototype.handleError = function (error) {
-        console.error('An error occurred', error); // TODO for demo purposes only
-        return Promise.reject(error.message || error);
+        console.error('An error occurred', error);
+        var errorObj;
+        try {
+            errorObj = JSON.parse(error._body);
+        }
+        catch (ex) {
+            errorObj = { 'value': error._body };
+        }
+        ;
+        return Promise.reject(errorObj || error);
     };
     return KidService;
 }());
 KidService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
+    __metadata("design:paramtypes", [http_1.Http,
+        account_service_1.AccountService])
 ], KidService);
 exports.KidService = KidService;
 //# sourceMappingURL=kid.service.js.map

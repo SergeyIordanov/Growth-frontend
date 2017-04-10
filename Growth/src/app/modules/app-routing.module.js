@@ -15,8 +15,8 @@ var routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: login_component_1.LoginComponent },
     { path: 'register', component: register_component_1.RegisterComponent },
-    { path: 'users/:userId', component: home_component_1.HomeComponent },
-    { path: 'users/:userId/kids/:kidId', component: profile_component_1.ProfileComponent },
+    { path: 'me', component: home_component_1.HomeComponent },
+    { path: 'me/kids/:kidId', component: profile_component_1.ProfileComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

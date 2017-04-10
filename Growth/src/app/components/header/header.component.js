@@ -12,29 +12,29 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
+var account_service_1 = require("./../../services/account/account.service");
 var user_service_1 = require("./../../services/user/user.service");
 var user_1 = require("./../../models/user");
 var HeaderComponent = (function () {
-    function HeaderComponent(userService, route, router, location) {
+    function HeaderComponent(accountService, userService, router, location) {
+        this.accountService = accountService;
         this.userService = userService;
-        this.route = route;
         this.router = router;
         this.location = location;
         this.user = new user_1.User();
     }
     HeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params
-            .switchMap(function (params) { return _this.userService.get(+params['userId']); })
-            .subscribe(function (user) {
+        this.userService.getCurrentUser()
+            .then(function (user) {
             _this.user = user;
             if (!_this.title) {
-                _this.title = "Hello, " + user.Name;
+                _this.title = "Hello, " + user.name;
             }
         });
     };
     HeaderComponent.prototype.logout = function () {
-        // todo logout
+        this.accountService.logout();
         this.router.navigate(['/login']);
     };
     return HeaderComponent;
@@ -49,8 +49,8 @@ HeaderComponent = __decorate([
         templateUrl: './header.component.html',
         styleUrls: ['./header.component.css']
     }),
-    __metadata("design:paramtypes", [user_service_1.UserService,
-        router_1.ActivatedRoute,
+    __metadata("design:paramtypes", [account_service_1.AccountService,
+        user_service_1.UserService,
         router_1.Router,
         common_1.Location])
 ], HeaderComponent);

@@ -35,8 +35,16 @@ var StepService = (function () {
             .catch(this.handleError);
     };
     StepService.prototype.handleError = function (error) {
-        console.error('An error occurred', error); // TODO for demo purposes only
-        return Promise.reject(error.message || error);
+        console.error('An error occurred', error);
+        var errorObj;
+        try {
+            errorObj = JSON.parse(error._body);
+        }
+        catch (ex) {
+            errorObj = { 'value': error._body };
+        }
+        ;
+        return Promise.reject(errorObj || error);
     };
     return StepService;
 }());
