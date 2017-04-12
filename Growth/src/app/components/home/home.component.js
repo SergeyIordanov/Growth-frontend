@@ -9,32 +9,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var user_service_1 = require("./../../services/user/user.service");
 var kid_service_1 = require("./../../services/kid/kid.service");
 var path_service_1 = require("./../../services/path/path.service");
 var kid_1 = require("./../../models/kid");
 var HomeComponent = (function () {
-    function HomeComponent(userService, pathService, kidService, route, location) {
+    function HomeComponent(userService, pathService, kidService) {
         this.userService = userService;
         this.pathService = pathService;
         this.kidService = kidService;
-        this.route = route;
-        this.location = location;
         this.newKid = new kid_1.Kid();
+        this.errorModel = new kid_1.Kid();
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.getKidsWithPaths();
+        this.resetNewKid();
     };
     HomeComponent.prototype.addKid = function () {
+        var _this = this;
         if (this.newKid.gender.trim() !== ""
             && this.newKid.name.trim() !== "") {
             this.kidService.create(this.newKid)
-                .then();
+                .then(function (id) {
+                _this.kidService.get(id).then(function (kid) { return _this.kids.push(kid); });
+                _this.resetNewKid();
+            })
+                .catch(function (error) {
+                _this.errorMessage = error.value;
+                _this.errorModel = error;
+            });
         }
-        this.getKidsWithPaths();
+    };
+    HomeComponent.prototype.setDeletingId = function (id) {
+        this.deletingId = id;
+    };
+    HomeComponent.prototype.removeKid = function () {
+        var _this = this;
+        if (this.deletingId) {
+            this.kidService.delete(this.deletingId)
+                .then(function () { return _this.kids = _this.kids.filter(function (kid) { return kid.id !== _this.deletingId; }); });
+        }
+    };
+    HomeComponent.prototype.getBase64 = function () {
+        var _this = this;
+        var file = $('#new_kid_photo')[0].files[0];
+        var reader = new FileReader();
+        reader.onload = function () { return _this.newKid.photo = reader.result; };
+        reader.readAsDataURL(file);
     };
     HomeComponent.prototype.getKidsWithPaths = function () {
         var _this = this;
@@ -49,6 +71,10 @@ var HomeComponent = (function () {
             }
         });
     };
+    HomeComponent.prototype.resetNewKid = function () {
+        this.newKid = new kid_1.Kid();
+        this.newKid.gender = "Male";
+    };
     return HomeComponent;
 }());
 HomeComponent = __decorate([
@@ -59,9 +85,7 @@ HomeComponent = __decorate([
     }),
     __metadata("design:paramtypes", [user_service_1.UserService,
         path_service_1.PathService,
-        kid_service_1.KidService,
-        router_1.ActivatedRoute,
-        common_1.Location])
+        kid_service_1.KidService])
 ], HomeComponent);
 exports.HomeComponent = HomeComponent;
 //# sourceMappingURL=home.component.js.map

@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var kid_service_1 = require("./../../services/kid/kid.service");
 var path_service_1 = require("./../../services/path/path.service");
@@ -19,26 +18,24 @@ var step_service_1 = require("./../../services/step/step.service");
 var kid_1 = require("./../../models/kid");
 var path_1 = require("./../../models/path");
 var ProfileComponent = (function () {
-    function ProfileComponent(pathService, goalService, stepService, kidService, route, location) {
+    function ProfileComponent(pathService, goalService, stepService, kidService, route) {
         this.pathService = pathService;
         this.goalService = goalService;
         this.stepService = stepService;
         this.kidService = kidService;
         this.route = route;
-        this.location = location;
         this.kid = new kid_1.Kid();
         this.selectedPath = new path_1.Path();
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.userId = +this.route.snapshot.params['userId'];
         this.route.params
-            .switchMap(function (params) { return _this.kidService.get(_this.userId, +params['kidId']); })
+            .switchMap(function (params) { return _this.kidService.get(params['kidId']); })
             .subscribe(function (kid) {
             _this.kid = kid;
             _this.getKidWithPaths();
-            if (_this.kid.Paths.length > 0) {
-                _this.selectedPath = _this.kid.Paths[0];
+            if (_this.kid.paths.length > 0) {
+                _this.selectedPath = _this.kid.paths[0];
                 _this.getGoalsWithSteps(_this.selectedPath.id);
             }
         });
@@ -49,37 +46,28 @@ var ProfileComponent = (function () {
         });
     };
     ProfileComponent.prototype.setPath = function (pathId) {
-        this.selectedPath = this.kid.Paths.find(function (p) { return p.id === pathId; });
+        this.selectedPath = this.kid.paths.find(function (p) { return p.id === pathId; });
         this.getGoalsWithSteps(this.selectedPath.id);
     };
     ProfileComponent.prototype.getKidWithPaths = function () {
         var _this = this;
-        this.pathService.getAll(this.userId, this.kid.id)
+        this.pathService.getAll(this.kid.id)
             .then(function (paths) {
-            _this.kid.Paths = paths;
+            _this.kid.paths = paths;
         });
     };
     ProfileComponent.prototype.getGoalsWithSteps = function (pathId) {
         var _this = this;
-        this.getGoals(this.kid.id, pathId).then(function (goals) {
-            _this.selectedPath.Goals = goals;
-            if (_this.selectedPath.Goals) {
-                _this.selectedPath.Goals.forEach(function (goal) {
-                    _this.getSteps(_this.kid.id, _this.selectedPath.id, goal.id).then(function (steps) {
-                        goal.Steps = steps;
+        this.goalService.getAll(this.kid.id, pathId).then(function (goals) {
+            _this.selectedPath.goals = goals;
+            if (_this.selectedPath.goals) {
+                _this.selectedPath.goals.forEach(function (goal) {
+                    _this.stepService.getAll(_this.kid.id, _this.selectedPath.id, goal.id).then(function (steps) {
+                        goal.steps = steps;
                     });
                 });
             }
         });
-    };
-    ProfileComponent.prototype.getPaths = function (kidId) {
-        return this.pathService.getAll(this.userId, kidId);
-    };
-    ProfileComponent.prototype.getGoals = function (kidId, pathId) {
-        return this.goalService.getAll(this.userId, kidId, pathId);
-    };
-    ProfileComponent.prototype.getSteps = function (kidId, pathId, goalId) {
-        return this.stepService.getAll(this.userId, kidId, pathId, goalId);
     };
     return ProfileComponent;
 }());
@@ -93,8 +81,7 @@ ProfileComponent = __decorate([
         goal_service_1.GoalService,
         step_service_1.StepService,
         kid_service_1.KidService,
-        router_1.ActivatedRoute,
-        common_1.Location])
+        router_1.ActivatedRoute])
 ], ProfileComponent);
 exports.ProfileComponent = ProfileComponent;
 //# sourceMappingURL=profile.component.js.map

@@ -2,29 +2,29 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Kid } from './../../models/kid';
-import { Path } from './../../models/path';
+import { AccountService } from './../account/account.service';
 import { Goal } from './../../models/goal';
 
 @Injectable()
 export class GoalService {
 
-    private urlPrefix = 'api/users';
-    private headers = new Headers({'Content-Type': 'application/json'});
+    private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+    private headers = new Headers({
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer ' + this.accountService.token()
+    });
 
-    constructor(private http: Http) { }
+        constructor(
+        private http: Http,
+        private accountService: AccountService
+    ) { }
 
-    getAll(userId: number, kidId: number, pathId: number): Promise<Goal[]> {
-        const url = `${this.urlPrefix}/${userId}`;
+    getAll(kidId: string, pathId: string): Promise<Goal[]> {
+        const url = `${this.urlPrefix}/${kidId}/paths/${pathId}/goals`;
 
-        return this.http.get(this.urlPrefix)
+        return this.http.get(this.urlPrefix, {headers: this.headers})
                 .toPromise()
-                .then(response => { 
-                    var data = response.json().data;
-                    var kids = data[0].Kids as Kid[];
-                    var paths =  data[0].Kids[kids.findIndex(k => k.id == kidId)].Paths as Path[];
-                    return data[0].Kids[kids.findIndex(k => k.id == kidId)].Paths[paths.findIndex(p => p.id == pathId)].Goals as Goal[];
-                })
+                .then(response => response.json() as Goal[])
                 .catch(this.handleError);
     }
 

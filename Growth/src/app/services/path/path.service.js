@@ -24,7 +24,7 @@ var PathService = (function () {
     }
     PathService.prototype.getAll = function (kidId) {
         var url = this.urlPrefix + "/" + kidId + "/paths";
-        return this.http.get(this.urlPrefix)
+        return this.http.get(this.urlPrefix, { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);

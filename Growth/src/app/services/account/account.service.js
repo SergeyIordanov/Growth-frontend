@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var core_2 = require("angular2-cookie/core");
 require("rxjs/add/operator/toPromise");
+var tokenCookie_1 = require("./../../models/tokenCookie");
 var AccountService = (function () {
     function AccountService(http, cookieService) {
         this.http = http;
@@ -28,11 +29,16 @@ var AccountService = (function () {
             .catch(this.handleError);
     };
     AccountService.prototype.login = function (loginModel) {
+        var _this = this;
         var url = this.urlPrefix + "/token";
-        var requestBody = "username=" + loginModel.Email + "&password=" + loginModel.Password;
+        var requestBody = "username=" + loginModel.email + "&password=" + loginModel.password;
         return this.http.post(url, requestBody, { headers: this.formHeaders })
             .toPromise()
-            .then(function (response) { return response.json(); })
+            .then(function (response) {
+            var token = response.json();
+            _this.saveToken(token);
+            return token;
+        })
             .catch(this.handleError);
     };
     AccountService.prototype.logout = function () {
@@ -41,9 +47,21 @@ var AccountService = (function () {
     AccountService.prototype.token = function () {
         var token = this.cookieService.getObject("growth_token");
         if (token) {
-            return token.Token;
+            var expDate = new Date(Date.parse(token.expiresDate.toString())).getUTCSeconds();
+            var curDate = new Date().getUTCSeconds() + 3600 * -3;
+            if (expDate > curDate) {
+                return token.token;
+            }
         }
         return undefined;
+    };
+    AccountService.prototype.saveToken = function (token) {
+        var now = new Date();
+        now.setUTCSeconds(now.getUTCSeconds() + token.ExpiresIn);
+        var tokenCookie = new tokenCookie_1.TokenCookie();
+        tokenCookie.token = token.Token;
+        tokenCookie.expiresDate = now;
+        this.cookieService.putObject("growth_token", tokenCookie);
     };
     AccountService.prototype.handleError = function (error) {
         console.error('An error occurred', error);

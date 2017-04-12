@@ -1,6 +1,4 @@
 import { Component, Input, OnInit }                 from '@angular/core';
-import { ActivatedRoute, Router, Params }   from '@angular/router';
-import { Location }                         from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
 import { KidService } from './../../services/kid/kid.service';
@@ -14,21 +12,17 @@ import { Kid }        from './../../models/kid';
 
 export class NavComponent implements OnInit {
     constructor(
-        private kidService: KidService,
-        private route: ActivatedRoute,
-        private router: Router,
-        private location: Location
+        private kidService: KidService
     ) {}
 
-    @Input() selectedKidId: number;
-    userId: number;
+    @Input() selectedKidId: string;
     kids: Kid[];
 
     ngOnInit(): void {
         this.getKids();       
     }
 
-    getKids(): void {
+    private getKids(): void {
         this.kidService.getAll().then(kids => this.kids = kids);
     }
 }

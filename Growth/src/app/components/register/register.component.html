@@ -5,13 +5,13 @@
                 <div class="wrap">
                     <p class="form-title">Register</p>
                     <form class="login">
-                        <input [(ngModel)]="registerModel.Name" type="text" placeholder="Name" name="name" />
+                        <input [(ngModel)]="registerModel.name" type="text" placeholder="Name" name="name" />
                         <p class="text-center error-message">{{errorModel.name}}</p>
-                        <input [(ngModel)]="registerModel.Email" type="email" placeholder="Email" name="email" />
+                        <input [(ngModel)]="registerModel.email" type="email" placeholder="Email" name="email" />
                         <p class="text-center error-message">{{errorModel.email}}</p>
-                        <input [(ngModel)]="registerModel.Password" type="password" placeholder="Password" name="password" />
+                        <input [(ngModel)]="registerModel.password" type="password" placeholder="Password" name="password" />
                         <p class="text-center error-message">{{errorModel.password}}</p>
-                        <input [(ngModel)]="registerModel.ConfirmPassword" type="password" placeholder="Confirm password" name="confirmPassword" />
+                        <input [(ngModel)]="registerModel.confirmPassword" type="password" placeholder="Confirm password" name="confirmPassword" />
                         <p class="text-center error-message">{{errorModel.confirmPassword}}</p>
                         <p class="text-center error-message">{{errorMessage}}</p>
                         <input type="submit" (click)="register()" value="Sign Up" class="btn btn-success btn-sm" />

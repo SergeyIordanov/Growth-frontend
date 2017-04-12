@@ -33,10 +33,15 @@ export class AccountService {
     login(loginModel: LoginModel): Promise<Token> {
         const url = `${this.urlPrefix}/token`;
         
-        var requestBody = `username=${loginModel.Email}&password=${loginModel.Password}`;
+        var requestBody = `username=${loginModel.email}&password=${loginModel.password}`;
         return this.http.post(url, requestBody, {headers: this.formHeaders})
                 .toPromise()
-                .then(response => response.json() as Token)
+                .then(response => {
+                    var token = response.json() as Token;
+                    this.saveToken(token);
+
+                    return token;
+                })
                 .catch(this.handleError);
     }
 
@@ -48,10 +53,25 @@ export class AccountService {
         var token = this.cookieService.getObject("growth_token") as TokenCookie;
 
         if(token){
-            return token.Token;
+            var expDate = new Date(Date.parse(token.expiresDate.toString())).getUTCSeconds();
+            var curDate = new Date().getUTCSeconds() + 3600 * -3;
+
+            if(expDate > curDate){
+                return token.token;
+            }
         }
 
         return undefined;
+    }
+
+    private saveToken(token : Token){
+        var now = new Date();
+        now.setUTCSeconds(now.getUTCSeconds() + token.ExpiresIn);
+        var tokenCookie = new TokenCookie(); 
+        tokenCookie.token = token.Token;
+        tokenCookie.expiresDate = now;
+        
+        this.cookieService.putObject("growth_token", tokenCookie);
     }
 
     private handleError(error: any): Promise<any> {

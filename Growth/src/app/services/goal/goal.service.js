@@ -11,22 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
+var account_service_1 = require("./../account/account.service");
 var GoalService = (function () {
-    function GoalService(http) {
+    function GoalService(http, accountService) {
         this.http = http;
-        this.urlPrefix = 'api/users';
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.accountService = accountService;
+        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.headers = new http_1.Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.accountService.token()
+        });
     }
-    GoalService.prototype.getAll = function (userId, kidId, pathId) {
-        var url = this.urlPrefix + "/" + userId;
-        return this.http.get(this.urlPrefix)
+    GoalService.prototype.getAll = function (kidId, pathId) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals";
+        return this.http.get(this.urlPrefix, { headers: this.headers })
             .toPromise()
-            .then(function (response) {
-            var data = response.json().data;
-            var kids = data[0].Kids;
-            var paths = data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths;
-            return data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths[paths.findIndex(function (p) { return p.id == pathId; })].Goals;
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     GoalService.prototype.handleError = function (error) {
@@ -45,7 +45,8 @@ var GoalService = (function () {
 }());
 GoalService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
+    __metadata("design:paramtypes", [http_1.Http,
+        account_service_1.AccountService])
 ], GoalService);
 exports.GoalService = GoalService;
 //# sourceMappingURL=goal.service.js.map

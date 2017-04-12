@@ -9,16 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var kid_service_1 = require("./../../services/kid/kid.service");
 var NavComponent = (function () {
-    function NavComponent(kidService, route, router, location) {
+    function NavComponent(kidService) {
         this.kidService = kidService;
-        this.route = route;
-        this.router = router;
-        this.location = location;
     }
     NavComponent.prototype.ngOnInit = function () {
         this.getKids();
@@ -31,7 +26,7 @@ var NavComponent = (function () {
 }());
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], NavComponent.prototype, "selectedKidId", void 0);
 NavComponent = __decorate([
     core_1.Component({
@@ -39,10 +34,7 @@ NavComponent = __decorate([
         templateUrl: './nav.component.html',
         styleUrls: ['./nav.component.css']
     }),
-    __metadata("design:paramtypes", [kid_service_1.KidService,
-        router_1.ActivatedRoute,
-        router_1.Router,
-        common_1.Location])
+    __metadata("design:paramtypes", [kid_service_1.KidService])
 ], NavComponent);
 exports.NavComponent = NavComponent;
 //# sourceMappingURL=nav.component.js.map

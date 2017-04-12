@@ -1,6 +1,5 @@
-import { Component, Input }                 from '@angular/core';
+import { Component, OnInit, Input }                 from '@angular/core';
 import { ActivatedRoute, Router, Params }   from '@angular/router';
-import { Location }                         from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
 import { AccountService } from './../../services/account/account.service';
@@ -12,17 +11,23 @@ import { RegisterModel } from './../../models/registerModel';
     styleUrls: [ './register.component.css' ]
 })
 
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+
     constructor(
         private accountService : AccountService,
         private route: ActivatedRoute,
-        private router: Router,
-        private location: Location
+        private router: Router
     ) {}
 
     registerModel = new RegisterModel();
     errorModel = new RegisterModel();
     errorMessage : string;
+
+    ngOnInit(): void {
+        if(this.accountService.token()){
+            this.router.navigate(['/me'])
+        }
+    }
 
     register(): void {
         this.accountService.register(this.registerModel)

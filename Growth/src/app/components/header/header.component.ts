@@ -1,6 +1,5 @@
 import { Component, OnInit, Input }        from '@angular/core';
 import { Router, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
 import { AccountService } from './../../services/account/account.service';
@@ -17,8 +16,7 @@ export class HeaderComponent implements OnInit{
     constructor(
         private accountService: AccountService,
         private userService: UserService,
-        private router: Router,
-        private location: Location
+        private router: Router
     ) {}
 
     @Input() title: string;

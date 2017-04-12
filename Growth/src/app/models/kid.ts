@@ -4,6 +4,6 @@ export class Kid {
     id: string;
     name: string;
     gender: string;
-    photoUrl: string;
+    photo: string;
     paths: Path[];
 }

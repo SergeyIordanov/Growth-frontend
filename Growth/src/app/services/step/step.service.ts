@@ -2,35 +2,29 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Kid } from './../../models/kid';
-import { Path } from './../../models/path';
-import { Goal } from './../../models/goal';
+import { AccountService } from './../account/account.service';
 import { Step } from './../../models/step';
 
 @Injectable()
 export class StepService {
 
-    private urlPrefix = 'api/users';
-    private headers = new Headers({'Content-Type': 'application/json'});
+    private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+    private headers = new Headers({
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer ' + this.accountService.token()
+    });
 
-    constructor(private http: Http) { }
+        constructor(
+        private http: Http,
+        private accountService: AccountService
+    ) { }
 
-    getAll(userId: number, kidId: number, pathId: number, goalId: number): Promise<Step[]> {
-        const url = `${this.urlPrefix}/${userId}`;
+    getAll(kidId: string, pathId: string, goalId: string): Promise<Step[]> {
+        const url = `${this.urlPrefix}/${kidId}/paths/${pathId}/goals/${goalId}/steps`;
 
-        return this.http.get(this.urlPrefix)
+        return this.http.get(this.urlPrefix, {headers: this.headers})
                 .toPromise()
-                .then(response => { 
-                    var data = response.json().data;
-                    var kids = data[0].Kids as Kid[];
-                    var paths =  data[0].Kids[kids.findIndex(k => k.id == kidId)].Paths as Path[];
-                    var goals = data[0].Kids[kids.findIndex(k => k.id == kidId)].Paths[paths.findIndex(p => p.id == pathId)].Goals as Goal[];
-                    return data[0]
-                        .Kids[kids.findIndex(k => k.id == kidId)]
-                        .Paths[paths.findIndex(p => p.id == pathId)]
-                        .Goals[goals.findIndex(g => g.id == goalId)]
-                        .Steps as Step[];
-                })
+                .then(response => response.json() as Step[])
                 .catch(this.handleError);
     }
 

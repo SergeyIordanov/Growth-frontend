@@ -11,27 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
+var account_service_1 = require("./../account/account.service");
 var StepService = (function () {
-    function StepService(http) {
+    function StepService(http, accountService) {
         this.http = http;
-        this.urlPrefix = 'api/users';
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.accountService = accountService;
+        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.headers = new http_1.Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.accountService.token()
+        });
     }
-    StepService.prototype.getAll = function (userId, kidId, pathId, goalId) {
-        var url = this.urlPrefix + "/" + userId;
-        return this.http.get(this.urlPrefix)
+    StepService.prototype.getAll = function (kidId, pathId, goalId) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + goalId + "/steps";
+        return this.http.get(this.urlPrefix, { headers: this.headers })
             .toPromise()
-            .then(function (response) {
-            var data = response.json().data;
-            var kids = data[0].Kids;
-            var paths = data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths;
-            var goals = data[0].Kids[kids.findIndex(function (k) { return k.id == kidId; })].Paths[paths.findIndex(function (p) { return p.id == pathId; })].Goals;
-            return data[0]
-                .Kids[kids.findIndex(function (k) { return k.id == kidId; })]
-                .Paths[paths.findIndex(function (p) { return p.id == pathId; })]
-                .Goals[goals.findIndex(function (g) { return g.id == goalId; })]
-                .Steps;
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     StepService.prototype.handleError = function (error) {
@@ -50,7 +45,8 @@ var StepService = (function () {
 }());
 StepService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
+    __metadata("design:paramtypes", [http_1.Http,
+        account_service_1.AccountService])
 ], StepService);
 exports.StepService = StepService;
 //# sourceMappingURL=step.service.js.map

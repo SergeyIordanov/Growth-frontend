@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
+import {}                    from "jquery";
 import 'rxjs/add/operator/switchMap';
 
 import { UserService } from './../../services/user/user.service';
@@ -19,26 +18,53 @@ export class HomeComponent implements OnInit{
     constructor(
         private userService: UserService,
         private pathService: PathService,
-        private kidService: KidService,
-        private route: ActivatedRoute,
-        private location: Location
+        private kidService: KidService
     ) {}
 
     kids: Kid[];
     newKid = new Kid();
+    deletingId: string;
+    errorModel = new Kid();
+    errorMessage: string;
 
     ngOnInit(): void {
-        this.getKidsWithPaths();        
+        this.getKidsWithPaths(); 
+        this.resetNewKid();      
     }
 
     addKid(){
         if(this.newKid.gender.trim() !== ""
             && this.newKid.name.trim() !== ""){
             this.kidService.create(this.newKid)
-                .then();
+                .then(id => {
+                    this.kidService.get(id).then(kid => this.kids.push(kid));
+                    this.resetNewKid(); 
+                })
+                .catch(error => {
+                    this.errorMessage = error.value
+                    this.errorModel = error;
+                });
         }
+    }
 
-        this.getKidsWithPaths();  
+    setDeletingId(id: string): void{
+        this.deletingId = id;
+    }
+
+    removeKid(){
+        if(this.deletingId){
+            this.kidService.delete(this.deletingId)
+                .then(() => this.kids = this.kids.filter(kid => kid.id !== this.deletingId));
+        }
+    }
+
+    getBase64() : void {
+        var file = (<any>$('#new_kid_photo'))[0].files[0];
+
+        var reader = new FileReader();
+        reader.onload = () => this.newKid.photo = reader.result;
+
+        reader.readAsDataURL(file);       
     }
 
     private getKidsWithPaths(): void {
@@ -52,5 +78,10 @@ export class HomeComponent implements OnInit{
                     });
                 }      
             });
+    }
+
+    private resetNewKid(){
+        this.newKid = new Kid();
+        this.newKid.gender = "Male";
     }
 }

@@ -4,10 +4,6 @@ import { FormsModule }      from '@angular/forms';
 import { HttpModule }       from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
-// Imports for loading & configuring the in-memory web api
-// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-// import { InMemoryDataService }  from './../services/in-memory-data.service';
-
 import { AppComponent }         from './../components/app/app.component';
 import { HomeComponent }        from './../components/home/home.component';
 import { HeaderComponent }      from './../components/header/header.component';
@@ -29,7 +25,6 @@ import { StepService }  from './../services/step/step.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    // InMemoryWebApiModule.forRoot(InMemoryDataService),
     AppRoutingModule
   ],
   declarations: [

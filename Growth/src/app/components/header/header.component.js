@@ -10,17 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var account_service_1 = require("./../../services/account/account.service");
 var user_service_1 = require("./../../services/user/user.service");
 var user_1 = require("./../../models/user");
 var HeaderComponent = (function () {
-    function HeaderComponent(accountService, userService, router, location) {
+    function HeaderComponent(accountService, userService, router) {
         this.accountService = accountService;
         this.userService = userService;
         this.router = router;
-        this.location = location;
         this.user = new user_1.User();
     }
     HeaderComponent.prototype.ngOnInit = function () {
@@ -51,8 +49,7 @@ HeaderComponent = __decorate([
     }),
     __metadata("design:paramtypes", [account_service_1.AccountService,
         user_service_1.UserService,
-        router_1.Router,
-        common_1.Location])
+        router_1.Router])
 ], HeaderComponent);
 exports.HeaderComponent = HeaderComponent;
 //# sourceMappingURL=header.component.js.map

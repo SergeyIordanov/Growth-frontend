@@ -64,6 +64,15 @@ ul {
     color: #ffffff;
 }
 
+.remove_kid_btn{
+    margin: 5px;
+    padding: 8px;
+    background-color: #999999;
+    border-radius: 100%;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
 .user-dashboard {
     padding: 0 20px;
 }

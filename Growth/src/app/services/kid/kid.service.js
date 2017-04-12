@@ -37,7 +37,7 @@ var KidService = (function () {
             .catch(this.handleError);
     };
     KidService.prototype.update = function (kid) {
-        var url = this.urlPrefix + "/" + kid.Id;
+        var url = this.urlPrefix + "/" + kid.id;
         return this.http
             .put(url, JSON.stringify(kid), { headers: this.headers })
             .toPromise()

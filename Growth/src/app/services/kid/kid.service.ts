@@ -40,7 +40,7 @@ export class KidService {
     }
 
     update(kid: Kid): Promise<string> {
-        const url = `${this.urlPrefix}/${kid.Id}`;
+        const url = `${this.urlPrefix}/${kid.id}`;
 
         return this.http
             .put(url, JSON.stringify(kid), {headers: this.headers})

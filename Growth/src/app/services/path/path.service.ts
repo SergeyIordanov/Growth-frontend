@@ -3,7 +3,6 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { AccountService } from './../account/account.service';
-import { Kid } from './../../models/kid';
 import { Path } from './../../models/path';
 
 @Injectable()
@@ -23,7 +22,7 @@ export class PathService {
     getAll(kidId: string): Promise<Path[]> {
         const url = `${this.urlPrefix}/${kidId}/paths`;
 
-        return this.http.get(this.urlPrefix)
+        return this.http.get(this.urlPrefix, {headers: this.headers})
                 .toPromise()
                 .then(response => response.json() as Path[])
                 .catch(this.handleError);

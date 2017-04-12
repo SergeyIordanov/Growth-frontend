@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import {} from "jquery";
 
@@ -25,24 +24,21 @@ export class ProfileComponent{
         private goalService: GoalService,
         private stepService: StepService,
         private kidService: KidService,
-        private route: ActivatedRoute,
-        private location: Location
+        private route: ActivatedRoute
     ) {}
 
-    userId: number;
     kid = new Kid();
     selectedPath = new Path();
 
     ngOnInit(): void {
-        this.userId = +this.route.snapshot.params['userId'];
         this.route.params 
-            .switchMap((params: Params) => this.kidService.get(this.userId, +params['kidId'])) 
+            .switchMap((params: Params) => this.kidService.get(params['kidId'])) 
             .subscribe(kid => {
                 this.kid = kid;
                 this.getKidWithPaths();
-                if(this.kid.Paths.length > 0)
+                if(this.kid.paths.length > 0)
                 {
-                    this.selectedPath = this.kid.Paths[0];
+                    this.selectedPath = this.kid.paths[0];
                     this.getGoalsWithSteps(this.selectedPath.id);
                 }
             });  
@@ -54,40 +50,28 @@ export class ProfileComponent{
         });         
     }
 
-    setPath(pathId: number){
-        this.selectedPath = this.kid.Paths.find(p => p.id === pathId);
+    setPath(pathId: string){
+        this.selectedPath = this.kid.paths.find(p => p.id === pathId);
         this.getGoalsWithSteps(this.selectedPath.id);
     }
 
     private getKidWithPaths(): void {
-        this.pathService.getAll(this.userId, this.kid.id)
+        this.pathService.getAll(this.kid.id)
             .then(paths => {
-                this.kid.Paths = paths;                      
+                this.kid.paths = paths;                      
             })
     }
 
-    private getGoalsWithSteps(pathId: number){
-        this.getGoals(this.kid.id, pathId).then(goals => {
-            this.selectedPath.Goals = goals
-            if(this.selectedPath.Goals){
-                this.selectedPath.Goals.forEach(goal => {
-                    this.getSteps(this.kid.id, this.selectedPath.id, goal.id).then(steps => {
-                        goal.Steps = steps                                      
+    private getGoalsWithSteps(pathId: string){
+        this.goalService.getAll(this.kid.id, pathId).then(goals => {
+            this.selectedPath.goals = goals
+            if(this.selectedPath.goals){
+                this.selectedPath.goals.forEach(goal => {
+                    this.stepService.getAll(this.kid.id, this.selectedPath.id, goal.id).then(steps => {
+                        goal.steps = steps                                      
                     })
                 });
             }
         })
-    }
-
-    private getPaths(kidId: number): Promise<Path[]> {
-        return this.pathService.getAll(this.userId, kidId);
-    }
-
-    private getGoals(kidId: number, pathId: number): Promise<Goal[]> {
-        return this.goalService.getAll(this.userId, kidId, pathId);
-    }
-
-    private getSteps(kidId: number, pathId: number, goalId: number): Promise<Step[]> {
-        return this.stepService.getAll(this.userId, kidId, pathId, goalId);
     }
 }

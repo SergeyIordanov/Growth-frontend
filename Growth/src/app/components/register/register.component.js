@@ -10,19 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var account_service_1 = require("./../../services/account/account.service");
 var registerModel_1 = require("./../../models/registerModel");
 var RegisterComponent = (function () {
-    function RegisterComponent(accountService, route, router, location) {
+    function RegisterComponent(accountService, route, router) {
         this.accountService = accountService;
         this.route = route;
         this.router = router;
-        this.location = location;
         this.registerModel = new registerModel_1.RegisterModel();
         this.errorModel = new registerModel_1.RegisterModel();
     }
+    RegisterComponent.prototype.ngOnInit = function () {
+        if (this.accountService.token()) {
+            this.router.navigate(['/me']);
+        }
+    };
     RegisterComponent.prototype.register = function () {
         var _this = this;
         this.accountService.register(this.registerModel)
@@ -42,8 +45,7 @@ RegisterComponent = __decorate([
     }),
     __metadata("design:paramtypes", [account_service_1.AccountService,
         router_1.ActivatedRoute,
-        router_1.Router,
-        common_1.Location])
+        router_1.Router])
 ], RegisterComponent);
 exports.RegisterComponent = RegisterComponent;
 //# sourceMappingURL=register.component.js.map
