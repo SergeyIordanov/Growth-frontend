@@ -164,13 +164,8 @@ export class ProfileComponent{
         this.newStep.completed = false;
         this.stepService.create(this.kidId, this.selectedPath.id, this.goalId, this.newStep)
             .then(id => {
-                this.stepService.get(this.kidId, this.selectedPath.id, this.goalId, id)
-                    .then(step => {
-                        this.kid.paths
-                            .find(p => p.id == this.selectedPath.id).goals
-                            .find(g => g.id == this.goalId).steps.push(step);
-                    });
-                this.resetNewGoal(); 
+                this.getGoalsWithSteps(this.selectedPath.id);
+                this.resetNewStep(); 
                 (<any>$('#modal_add_step')).modal('hide')
             })
             .catch(error => {
@@ -187,14 +182,7 @@ export class ProfileComponent{
     removeStep(goalId: string, id: string){
         if(id){
             this.stepService.delete(this.kidId, this.selectedPath.id, goalId, id)
-                .then(() => {
-                    var steps = this.kid.paths
-                        .find(p => p.id == this.selectedPath.id).goals
-                        .find(g => g.id == goalId).steps;
-                    this.kid.paths
-                        .find(p => p.id == this.selectedPath.id).goals
-                        .find(g => g.id == goalId).steps = steps.filter(step => step.id !== id);
-                });
+                .then(() => this.getGoalsWithSteps(this.selectedPath.id));
         }
     }
 

@@ -147,13 +147,8 @@ var ProfileComponent = (function () {
         this.newStep.completed = false;
         this.stepService.create(this.kidId, this.selectedPath.id, this.goalId, this.newStep)
             .then(function (id) {
-            _this.stepService.get(_this.kidId, _this.selectedPath.id, _this.goalId, id)
-                .then(function (step) {
-                _this.kid.paths
-                    .find(function (p) { return p.id == _this.selectedPath.id; }).goals
-                    .find(function (g) { return g.id == _this.goalId; }).steps.push(step);
-            });
-            _this.resetNewGoal();
+            _this.getGoalsWithSteps(_this.selectedPath.id);
+            _this.resetNewStep();
             $('#modal_add_step').modal('hide');
         })
             .catch(function (error) {
@@ -169,14 +164,7 @@ var ProfileComponent = (function () {
         var _this = this;
         if (id) {
             this.stepService.delete(this.kidId, this.selectedPath.id, goalId, id)
-                .then(function () {
-                var steps = _this.kid.paths
-                    .find(function (p) { return p.id == _this.selectedPath.id; }).goals
-                    .find(function (g) { return g.id == goalId; }).steps;
-                _this.kid.paths
-                    .find(function (p) { return p.id == _this.selectedPath.id; }).goals
-                    .find(function (g) { return g.id == goalId; }).steps = steps.filter(function (step) { return step.id !== id; });
-            });
+                .then(function () { return _this.getGoalsWithSteps(_this.selectedPath.id); });
         }
     };
     ProfileComponent.prototype.setGoalId = function (goalId) {
