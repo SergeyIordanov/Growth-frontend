@@ -9,7 +9,8 @@ import { Kid } from './../../models/kid';
 @Injectable()
 export class KidService {
 
-    private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+    //private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+    private urlPrefix = 'http://localhost:5000/api/me/kids';
     private headers = new Headers({
         'Content-Type': 'application/json', 
         'Authorization': 'Bearer ' + this.accountService.token()

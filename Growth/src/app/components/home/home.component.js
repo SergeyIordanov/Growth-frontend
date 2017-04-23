@@ -28,18 +28,16 @@ var HomeComponent = (function () {
     };
     HomeComponent.prototype.addKid = function () {
         var _this = this;
-        if (this.newKid.gender.trim() !== ""
-            && this.newKid.name.trim() !== "") {
-            this.kidService.create(this.newKid)
-                .then(function (id) {
-                _this.kidService.get(id).then(function (kid) { return _this.kids.push(kid); });
-                _this.resetNewKid();
-            })
-                .catch(function (error) {
-                _this.errorMessage = error.value;
-                _this.errorModel = error;
-            });
-        }
+        this.kidService.create(this.newKid)
+            .then(function (id) {
+            _this.kidService.get(id).then(function (kid) { return _this.kids.push(kid); });
+            _this.resetNewKid();
+            $('#add_modal').modal('hide');
+        })
+            .catch(function (error) {
+            _this.errorMessage = error.value;
+            _this.errorModel = error;
+        });
     };
     HomeComponent.prototype.setDeletingId = function (id) {
         this.deletingId = id;

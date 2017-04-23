@@ -24,7 +24,7 @@
                     </p>
                     <ul class="event-list paths">
                         <li *ngFor="let path of kid.paths">
-                            <time [class.selected-path]="path.id === selectedPath.id">
+                            <time [class.selected-path]="selectedPath && path.id === selectedPath.id">
                             </time>
                             <div>
                             </div>
@@ -32,21 +32,29 @@
                                 <h2 class="title"><a href="javascript:;" (click)="setPath(path.id)">{{path.title}}</a></h2>
                                 <p class="desc">{{path.description}}</p>
                                 <ul>
-                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_edit_path"><span class="fa fa-pencil"></span> Edit</a></li>
-                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_path"><span class="fa fa-remove"></span> Delete</a></li>
+                                    <li style="width:50%;">
+                                        <a href="#" (click)="setUpdatingPath(path)" data-toggle="modal" data-target="#modal_edit_path">
+                                            <span class="fa fa-pencil"></span> Edit
+                                        </a>
+                                    </li>
+                                    <li style="width:50%;">
+                                        <a href="#" (click)="setDeletingPathId(path.id)" data-toggle="modal" data-target="#modal_delete_path">
+                                            <span class="fa fa-remove"></span> Delete
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>                       
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-                    <p class="paths-goals text-center">Goals <span *ngIf="selectedPath.title">({{selectedPath.Title}})</span>
-                        <a href="#" data-toggle="modal" data-target="#modal_add_goal" class="btn btn-circle btn-lg">
+                    <p class="paths-goals text-center">Goals <span *ngIf="selectedPath && selectedPath.title">({{selectedPath.title}})</span>
+                        <a *ngIf="selectedPath" href="#" data-toggle="modal" data-target="#modal_add_goal" class="btn btn-circle btn-lg">
                             <i class="glyphicon glyphicon-plus"></i>
                         </a>
                     </p>
-                    <p *ngIf="selectedPath.description" class="goal-desc text-center">{{selectedPath.description}}</p>
-                    <ul class="event-list goals">
+                    <p *ngIf="selectedPath && selectedPath.description" class="goal-desc text-center">{{selectedPath.description}}</p>
+                    <ul *ngIf="selectedPath" class="event-list goals">
                         <li *ngFor="let goal of selectedPath.goals" [class.completed]="goal.completed">
                             <time>
                                 <span class="month">{{goal.goalMonth}}</span>
@@ -59,7 +67,7 @@
                                     <thead>
                                         <tr>
                                             <th>Steps 
-                                                <a *ngIf="!goal.completed" href="#" data-toggle="modal" data-target="#modal_add_step" class="btn btn-circle btn-lg">
+                                                <a *ngIf="!goal.completed" href="#" (click)="setGoalId(goal.id)" data-toggle="modal" data-target="#modal_add_step" class="btn btn-circle btn-lg">
                                                     <i class="glyphicon glyphicon-plus"></i>
                                                 </a>
                                             </th>
@@ -70,16 +78,18 @@
                                     <tbody>
                                         <tr *ngFor="let step of goal.steps" [class.success]="step.completed">
                                             <td>{{step.text}}</td>
-                                            <td *ngIf="step.completed"><span class="fa fa-check"></span></td>
-                                            <td *ngIf="!step.completed"><a href="#"><span class="fa fa-minus"></span></a></td>
-                                            <td *ngIf="!goal.completed"><a href="#"><span class="fa fa-remove"></span></a></td>
+                                            <td *ngIf="step.completed && !goal.completed"><a href="javascript:;" (click)="updateStepStatus(goal.id, step, false)"><span class="fa fa-check"></span></a></td>
+                                            <td *ngIf="step.completed && goal.completed"><span class="fa fa-check"></span></td>
+                                            <td *ngIf="!step.completed && !goal.completed"><a href="javascript:;" (click)="updateStepStatus(goal.id, step, true)"><span class="fa fa-minus"></span></a></td>
+                                            <td *ngIf="!step.completed && goal.completed"><span class="fa fa-minus"></span></td>
+                                            <td *ngIf="!goal.completed"><a href="javascript:;" (click)="removeStep(goal.id, step.id)"><span class="fa fa-remove"></span></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <ul>
-                                    <li *ngIf="!goal.completed" style="width:50%;"><span class="fa fa-check"></span> Complete</li>
-                                    <li *ngIf="goal.completed" style="width:50%;"><span class="fa fa-mail-reply"></span> Reset</li>
-                                    <li style="width:50%;"><a href="#" data-toggle="modal" data-target="#modal_delete_goal"><span class="fa fa-remove"></span> Delete</a></li>
+                                    <li *ngIf="!goal.completed" style="width:50%;"><a href="javascript:;" (click)="updateGoalStatus(goal, true)"><span class="fa fa-check"></span> Complete</a></li>
+                                    <li *ngIf="goal.completed" style="width:50%;"><a href="javascript:;" (click)="updateGoalStatus(goal, false)"><span class="fa fa-mail-reply"></span> Reset</a></li>
+                                    <li style="width:50%;"><a href="#" (click)="setDeletingGoalId(goal.id)" data-toggle="modal" data-target="#modal_delete_goal"><span class="fa fa-remove"></span> Delete</a></li>
                                 </ul>
                             </div>
                         </li>                       
@@ -100,12 +110,15 @@
                 <h4 class="modal-title">Add Path</h4>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="Title" name="title">
-                <textarea placeholder="Description" name="description"></textarea>
+                <input [(ngModel)]="newPath.title" type="text" placeholder="Title" name="title">
+                <p class="text-center error-message">{{pathErrorModel.Title}}</p>
+                <textarea [(ngModel)]="newPath.description" placeholder="Description" name="description"></textarea>
+                <p class="text-center error-message">{{pathErrorModel.Description}}</p>
+                <p class="text-center error-message">{{pathErrorMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+                <button (click)="addPath()" type="button" class="add-btn">Save</button>
             </div>
         </div>
     </div>
@@ -120,12 +133,15 @@
                 <h4 class="modal-title">Edit Path</h4>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="Title" name="title" value="Spanish">
-                <textarea placeholder="Description" name="description">Mary dreams about being a toreador. In this case Spanish will be useful</textarea>
+                <input [(ngModel)]="updatingPath.title"  type="text" placeholder="Title" name="title">
+                <p class="text-center error-message">{{pathErrorModel.Title}}</p>
+                <textarea [(ngModel)]="updatingPath.description" placeholder="Description" name="description"></textarea>
+                <p class="text-center error-message">{{pathErrorModel.Description}}</p>
+                <p class="text-center error-message">{{pathErrorMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+                <button (click)="updatePath()" type="button" class="add-btn">Save</button>
             </div>
         </div>
     </div>
@@ -140,15 +156,19 @@
                 <h4 class="modal-title">Add Goal</h4>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="Title" name="title">
+                <input  [(ngModel)]="newGoal.title" type="text" placeholder="Title" name="title">
+                <p class="text-center error-message">{{goalErrorModel.Title}}</p>
                 <div class="input-group date month-only">
-                    <input type="text" placeholder="End date" name="endDate">
+                    <input [(ngModel)]="newGoal.goalMonth" type="text" placeholder="End date" name="endDate">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    <p class="text-center error-message">{{goalErrorModel.goalMonth}}</p>
+                    <p class="text-center error-message">{{goalErrorModel.goalYear}}</p>
+                    <p class="text-center error-message">{{goalErrorMessage}}</p>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+                <button (click)="addGoal()" type="button" class="add-btn">Save</button>
             </div>
         </div>
     </div>
@@ -166,7 +186,7 @@
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="delete-btn" data-dismiss="modal">Delete</button>
+                <button (click)="removePath()" type="button" class="delete-btn" data-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>
@@ -184,7 +204,7 @@
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="delete-btn" data-dismiss="modal">Delete</button>
+                <button (click)="removeGoal()" type="button" class="delete-btn" data-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>
@@ -199,11 +219,13 @@
                 <h4 class="modal-title">Add Step</h4>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="To do" name="text">
+                <input [(ngModel)]="newStep.text" type="text" placeholder="To do" name="text">
+                <p class="text-center error-message">{{stepErrorModel.Text}}</p>
+                <p class="text-center error-message">{{stepErrorMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button type="button" class="add-btn" data-dismiss="modal">Save</button>
+                <button (click)="addStep()"  type="button" class="add-btn">Save</button>
             </div>
         </div>
     </div>

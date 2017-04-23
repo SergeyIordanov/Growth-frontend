@@ -10,14 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var core_2 = require("angular2-cookie/core");
 require("rxjs/add/operator/switchMap");
 var account_service_1 = require("./../../services/account/account.service");
 var loginModel_1 = require("./../../models/loginModel");
 var LoginComponent = (function () {
-    function LoginComponent(accountService, cookieService, router) {
+    function LoginComponent(accountService, router) {
         this.accountService = accountService;
-        this.cookieService = cookieService;
         this.router = router;
         this.loginModel = new loginModel_1.LoginModel();
         this.errorModel = new loginModel_1.LoginModel();
@@ -45,7 +43,6 @@ LoginComponent = __decorate([
         styleUrls: ['./login.component.css']
     }),
     __metadata("design:paramtypes", [account_service_1.AccountService,
-        core_2.CookieService,
         router_1.Router])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;

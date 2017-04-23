@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router }           from '@angular/router';
 import { Location }         from '@angular/common';
-import {CookieService}      from 'angular2-cookie/core';
 import 'rxjs/add/operator/switchMap';
 
 import { AccountService }   from './../../services/account/account.service';
@@ -18,7 +17,6 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private accountService : AccountService,
-        private cookieService : CookieService,
         private router: Router
     ) {}
 

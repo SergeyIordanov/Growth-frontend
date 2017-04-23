@@ -33,18 +33,16 @@ export class HomeComponent implements OnInit{
     }
 
     addKid(){
-        if(this.newKid.gender.trim() !== ""
-            && this.newKid.name.trim() !== ""){
-            this.kidService.create(this.newKid)
-                .then(id => {
-                    this.kidService.get(id).then(kid => this.kids.push(kid));
-                    this.resetNewKid(); 
-                })
-                .catch(error => {
-                    this.errorMessage = error.value
-                    this.errorModel = error;
-                });
-        }
+        this.kidService.create(this.newKid)
+            .then(id => {
+                this.kidService.get(id).then(kid => this.kids.push(kid));
+                this.resetNewKid();
+                (<any>$('#add_modal')).modal('hide')
+            })
+            .catch(error => {
+                this.errorMessage = error.value
+                this.errorModel = error;
+            });
     }
 
     setDeletingId(id: string): void{

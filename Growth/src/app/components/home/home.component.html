@@ -50,21 +50,21 @@
             </div>
             <div class="modal-body">
                 <input [(ngModel)]="newKid.name" type="text" placeholder="Name" name="name">
-                <p class="text-center error-message">{{errorModel.name}}</p>
+                <p class="text-center error-message">{{errorModel.Name}}</p>
                 <div class="radio">
                     <label><input [(ngModel)]="newKid.gender" type="radio" value="Male" name="gender">Boy</label>
                 </div>
                 <div class="radio">
                     <label><input [(ngModel)]="newKid.gender" type="radio" value="Female" name="gender">Girl</label>
                 </div>
-                <p class="text-center error-message">{{errorModel.gender}}</p>
+                <p class="text-center error-message">{{errorModel.Gender}}</p>
                 <input id='new_kid_photo' (change)="getBase64()" type="file" accept=".jpg,.png,.jpeg" placeholder="Photo" name="photo">
-                <p class="text-center error-message">{{errorModel.photo}}</p>
+                <p class="text-center error-message">{{errorModel.Photo}}</p>
                 <p class="text-center error-message">{{errorMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                <button (click)="addKid()" type="button" class="add-btn" data-dismiss="modal">Save</button>
+                <button (click)="addKid()" type="button" class="add-btn">Save</button>
             </div>
         </div>
 

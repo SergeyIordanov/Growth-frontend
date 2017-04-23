@@ -12,7 +12,8 @@ import { TokenCookie } from './../../models/tokenCookie';
 @Injectable()
 export class AccountService {
 
-    private urlPrefix = 'http://growth-app.azurewebsites.net/api';
+    //private urlPrefix = 'http://growth-app.azurewebsites.net/api';
+    private urlPrefix = 'http://localhost:5000/api';
     private jsonHeaders = new Headers({'Content-Type': 'application/json'});
     private formHeaders = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
 
@@ -58,6 +59,9 @@ export class AccountService {
 
             if(expDate > curDate){
                 return token.token;
+            }
+            else{
+                this.cookieService.remove("growth_token");
             }
         }
 

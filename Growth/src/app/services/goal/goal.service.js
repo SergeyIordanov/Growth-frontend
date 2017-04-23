@@ -16,7 +16,8 @@ var GoalService = (function () {
     function GoalService(http, accountService) {
         this.http = http;
         this.accountService = accountService;
-        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        //private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.urlPrefix = 'http://localhost:5000/api/me/kids';
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.accountService.token()
@@ -24,9 +25,39 @@ var GoalService = (function () {
     }
     GoalService.prototype.getAll = function (kidId, pathId) {
         var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals";
-        return this.http.get(this.urlPrefix, { headers: this.headers })
+        return this.http.get(url, { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    GoalService.prototype.get = function (kidId, pathId, id) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + id;
+        return this.http.get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    GoalService.prototype.update = function (kidId, pathId, goal) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals";
+        return this.http
+            .put(url, JSON.stringify(goal), { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    GoalService.prototype.create = function (kidId, pathId, goal) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals";
+        return this.http
+            .post(url, JSON.stringify(goal), { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    GoalService.prototype.delete = function (kidId, pathId, id) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + id;
+        return this.http.delete(url, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
             .catch(this.handleError);
     };
     GoalService.prototype.handleError = function (error) {

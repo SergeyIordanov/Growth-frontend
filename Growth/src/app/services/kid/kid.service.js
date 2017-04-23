@@ -16,7 +16,8 @@ var KidService = (function () {
     function KidService(http, accountService) {
         this.http = http;
         this.accountService = accountService;
-        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        //private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.urlPrefix = 'http://localhost:5000/api/me/kids';
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.accountService.token()

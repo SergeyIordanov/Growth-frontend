@@ -16,7 +16,8 @@ var PathService = (function () {
     function PathService(http, accountService) {
         this.http = http;
         this.accountService = accountService;
-        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        //private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.urlPrefix = 'http://localhost:5000/api/me/kids';
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.accountService.token()
@@ -24,9 +25,39 @@ var PathService = (function () {
     }
     PathService.prototype.getAll = function (kidId) {
         var url = this.urlPrefix + "/" + kidId + "/paths";
-        return this.http.get(this.urlPrefix, { headers: this.headers })
+        return this.http.get(url, { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    PathService.prototype.get = function (kidId, id) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + id;
+        return this.http.get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    PathService.prototype.update = function (kidId, path) {
+        var url = this.urlPrefix + "/" + kidId + "/paths";
+        return this.http
+            .put(url, JSON.stringify(path), { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    PathService.prototype.create = function (kidId, path) {
+        var url = this.urlPrefix + "/" + kidId + "/paths";
+        return this.http
+            .post(url, JSON.stringify(path), { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    PathService.prototype.delete = function (kidId, id) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + id;
+        return this.http.delete(url, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
             .catch(this.handleError);
     };
     PathService.prototype.handleError = function (error) {

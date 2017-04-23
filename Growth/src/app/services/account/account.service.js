@@ -17,7 +17,8 @@ var AccountService = (function () {
     function AccountService(http, cookieService) {
         this.http = http;
         this.cookieService = cookieService;
-        this.urlPrefix = 'http://growth-app.azurewebsites.net/api';
+        //private urlPrefix = 'http://growth-app.azurewebsites.net/api';
+        this.urlPrefix = 'http://localhost:5000/api';
         this.jsonHeaders = new http_1.Headers({ 'Content-Type': 'application/json' });
         this.formHeaders = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     }
@@ -51,6 +52,9 @@ var AccountService = (function () {
             var curDate = new Date().getUTCSeconds() + 3600 * -3;
             if (expDate > curDate) {
                 return token.token;
+            }
+            else {
+                this.cookieService.remove("growth_token");
             }
         }
         return undefined;

@@ -8,7 +8,8 @@ import { User } from './../../models/user';
 @Injectable()
 export class UserService {
 
-    private urlPrefix = 'http://growth-app.azurewebsites.net/api';
+    //private urlPrefix = 'http://growth-app.azurewebsites.net/api';
+    private urlPrefix = 'http://localhost:5000/api';
     private headers = new Headers({
         'Content-Type': 'application/json', 
         'Authorization': 'Bearer ' + this.accountService.token()

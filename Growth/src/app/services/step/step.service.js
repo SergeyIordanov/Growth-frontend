@@ -16,7 +16,8 @@ var StepService = (function () {
     function StepService(http, accountService) {
         this.http = http;
         this.accountService = accountService;
-        this.urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        //private urlPrefix = 'http://growth-app.azurewebsites.net/api/me/kids';
+        this.urlPrefix = 'http://localhost:5000/api/me/kids';
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.accountService.token()
@@ -24,9 +25,39 @@ var StepService = (function () {
     }
     StepService.prototype.getAll = function (kidId, pathId, goalId) {
         var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + goalId + "/steps";
-        return this.http.get(this.urlPrefix, { headers: this.headers })
+        return this.http.get(url, { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    StepService.prototype.get = function (kidId, pathId, goalId, id) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + goalId + "/steps/" + id;
+        return this.http.get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    StepService.prototype.update = function (kidId, pathId, goalId, step) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + goalId + "/steps";
+        return this.http
+            .put(url, JSON.stringify(step), { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    StepService.prototype.create = function (kidId, pathId, goalId, step) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + goalId + "/steps";
+        return this.http
+            .post(url, JSON.stringify(step), { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    StepService.prototype.delete = function (kidId, pathId, goalId, id) {
+        var url = this.urlPrefix + "/" + kidId + "/paths/" + pathId + "/goals/" + goalId + "/steps/" + id;
+        return this.http.delete(url, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
             .catch(this.handleError);
     };
     StepService.prototype.handleError = function (error) {

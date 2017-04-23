@@ -16,7 +16,8 @@ var UserService = (function () {
     function UserService(http, accountService) {
         this.http = http;
         this.accountService = accountService;
-        this.urlPrefix = 'http://growth-app.azurewebsites.net/api';
+        //private urlPrefix = 'http://growth-app.azurewebsites.net/api';
+        this.urlPrefix = 'http://localhost:5000/api';
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.accountService.token()
